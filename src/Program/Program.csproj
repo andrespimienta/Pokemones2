@@ -12,14 +12,11 @@
 
   <ItemGroup>
     <None Include="bin\Debug\net8.0\Catalogo.txt" />
+    <None Include="bin\Debug\net8.0\CatalogoPokemones.txt" />
   </ItemGroup>
 
   <ItemGroup>
     <Content Include="bin\Debug\net8.0\Catalogo.txt" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="bin\Debug\net8.0\" />
   </ItemGroup>
 
 </Project>
