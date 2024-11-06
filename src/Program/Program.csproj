@@ -10,4 +10,8 @@
     <ProjectReference Include="..\Library\Library.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Include="bin\Debug\net8.0\Catalogo.txt" />
+  </ItemGroup>
+
 </Project>

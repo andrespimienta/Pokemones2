@@ -5,4 +5,12 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Include="bin\Debug\net8.0\Catalogo.txt" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="bin\Debug\net8.0\" />
+  </ItemGroup>
+
 </Project>
