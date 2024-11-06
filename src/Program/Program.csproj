@@ -14,4 +14,11 @@
     <None Include="bin\Debug\net8.0\Catalogo.txt" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Include="..\Library\Catalogo.txt">
+      <Link>Catalogo.txt</Link>
+    </Content>
+    <Content Include="bin\Debug\net8.0\Catalogo.txt" />
+  </ItemGroup>
+
 </Project>
