@@ -1,79 +1,53 @@
-<img alt="UCU" src="https://www.ucu.edu.uy/plantillas/images/logo_ucu.svg"
-width="150"/>
+# Proyecto Pokemones - Parte I
 
-# Universidad Católica del Uruguay
+## Introducción al formato elegido
+La organización detrás de nuestro código para esta parte del proyecto
+gira alrededor de la idea de que los datos necesarios principales se
+encuentren en un archivo txt.
+El archivo "Catalogo.txt" contiene toda la información acerca de los
+Pokemones que pueden ser elegidos, sus atributos y sus ataques.
 
-## Facultad de Ingeniería y Tecnologías
+Elegir este formato permite una gran flexibilidad, puesto que facilita quitar,
+agregar, o modificar los datos de Pokemones nuevos o ya existentes sin
+alterar de ninguna manera el funcionamiento del resto de las clases.
 
-### Programación II
+## Principios y ventajas aplicadas
+Además, intentamos compartimentar las clases lo más posible, de modo que
+los métodos y responsabilidades de cada una tengan sentido, acorde con
+la información a la que pueden acceder. Por ejemplo, los pokemones y los
+ataques son instanciados por métodos de "LeerArchivo", que es la única
+clase que cuenta directamente con los datos necesarios para llevar a
+cabo esta función (aplicamos "Creator" y "Expert").
 
-# Encuentros de tipos en la Tierra Media
+También aplicamos "Expert" en algunas situaciones, como a la hora de
+decidir que los métodos "UsarPokemon()" y "GuardarPokemon()" deberían
+ser responsabilidad de la clase Jugador y no de la propia clase "Pokemon",
+puesto que no le corresponde al Pokemon seleccionarse a sí mismo, sino
+a la clase que tenga una colección de Pokemones, permitiéndole decidir
+cuál utiliza y cuáles deja guardados en su selección.
 
-En este juego, los personajes han cobrado vida. Pero de una forma bastante
-desorganizada.
+Como este hay varios otros ejemplos en los que se ve como cada clase se
+asegura de cumplir únicamente con lo que tiene sentido que le corresponda,
+a la vez que facilitan métodos específicos para determinar bajo qué
+circunstancias pueden ser modificados sus atributos, cumpliendo de esta
+forma también con "SRP".
 
-Tenemos gran variedad de elementos que podemos intuír que son del mismo tipo.
-Pero esto no está reflejado en nuestro código. En este ejercicio vamos a
-modificar nuestro proyecto para mejorar el código que tenemos hasta ahora.
+## Lógica y funcionamiento
+El programa inicia pidiendo los datos para crear dos objetos de la clase Jugador
+que corresponderán a los jugadores que se enfrentarán. Luego imprime el catálgo
+de Pokemones posibles utilizando, a través de la fachada, un método de LeerArchivo
+que se encarga de imprimir los datos de "Catalogo.txt" de manera más procesada,
+con más detalle.
 
-## Personajes _[Characters]_
+Durante la mayor parte del código de Program, veremos que
+interactúa principalmente con los métodos de la clase Fachada, y es esta clase
+la que se encarga de llamar a los métodos que correspondan del resto de las
+clases existentes.
 
-Quizás hayas notado que hay varias propiedades que los personajes tienen en
-común unos con otros. Todos ellos:
-
-- manejan un nivel de vida
-
-- pueden ser atacados
-
-- pueden ser curados
-
-- pueden tener items
-
-Adicionalmente, los magos pueden tener elementos mágicos —a diferencia de los
-no-magos, que _no pueden tener elementos mágicos_—. No olvides que los elementos
-mágicos también sirven para atacar y defender.
-
-## Elementos _[Items]_
-
-Existen muchos elementos, y podemos encontrar algunas cosas en común:
-
-- Algunos elementos son armas, que le permiten a los personajes atacar a otros.
-  Éstas tienen un valor de ataque.
-
-- Otros elementos son de defensa y permiten defender ataques, y por ende tienen
-  un valor de defensa.
-
-- ¡Algunos permiten atacar **y** defender! En cuyos casos tienen valor de ataque
-  y de defensa.
-
-- Hay elementos que son mágicos y elementos que no. Esto es importante porque
-  sólo los Magos pueden hacer uso de elementos mágicos.
-
-- No existe solamente un hechizo, ¡existen muchos! Y el libro de hechizos puede
-  tener muchos hechizos diferentes.
-
-## Desafío
-
-### Parte 0: Diseño
-
-Construyan el diagrama de clases de la solución,agregando las abstracciones que
-identifiquen, dada la descripción de elementos y personajes.
-
-### Parte 1: Refactoring
-
-Refactorizen[^1] el código de la [parte
-1](https://github.com/ucudal/PII_RoleplayGame_1_Start), aplicando las
-abstracciones que se identificaron en la parte anterior.
-
-[^1]: La refactorización —del inglés *refactoring*— es una técnica de la
-      ingeniería de software para reestructurar un código fuente, alterando su
-      estructura interna sin cambiar su comportamiento externo.
-      [Fuente](https://es.wikipedia.org/wiki/Refactorizaci%C3%B3n)_
-
-### Parte 2: Comprobar que sigue funcionando
-
-Como bien saben, el proceso de refactoring cambia la estructura del código sin
-cambiar su comportamiento. Para demostrar esto, agreguen los casos de test de la
-[parte 1](https://github.com/ucudal/PII_RoleplayGame_1_Start#parte-4-testing) (o
-escribanlos si no llegaron a escribirlos) y comprueben que todo siga funcionando
-igual que antes (los tests dan verde).
+Luego de mostrar el catálogo, por ejemplo, se le pide al jugador que elija
+los seis Pokemones de su selección, para lo cual se llama a "Fachada.ElegirPokemon()"
+que a su vez interactúa con LeerArchivo para encontrar e instaciar el Pokemon
+elegido, luego agregarlo a la lista de Pokemones de la clase Jugador. Es decir,
+con un simple método de Fachada, conectamos de una manera u otra con todas
+las demás clases. Este tipo de funcionamiento aplica para todas las demás
+acciones que se llevarían a cabo en el contexto de una batalla de Pokemones.
