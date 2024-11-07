@@ -118,7 +118,7 @@ public static class LeerArchivo
 
                 string path1 = @"C:\Repositorios\Pokemones2\src\Program\Debilidades.txt";
                 string path2 = @"C:\Repositorios\Pokemones2\src\Program\Resistencias.txt";
-                string path3 = @"C:\Repositorios\Pokemones2\src\Program\Inmunidades.txt";
+                string path3 = @"C:\Repositorios\Pokemones2\src\Program\Inmunudidades.txt";
 
                 List<string> debilidades = Encontrar(pokeTipo, path1);
                 List<string> resistencias = Encontrar(pokeTipo, path2);

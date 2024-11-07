@@ -82,15 +82,15 @@ public class Pokemon
 
     public void RecibirDaño(IAtaque ataqueRecibido)
     {
-        if (listaDeInmudidades.Contains(ataqueRecibido.GetTipo()))
+        if (listaDeInmudidades!=null && listaDeInmudidades.Contains(ataqueRecibido.GetTipo()))
         {
             //no hagas nada
         }
-        else if (listaDeDebilidades.Contains(ataqueRecibido.GetTipo()))
+        else if (listaDeDebilidades!=null && listaDeDebilidades.Contains(ataqueRecibido.GetTipo()))
         {
             this.vida -= ataqueRecibido.GetDaño()*2;
         }
-        else if (listaDeResistencia.Contains(ataqueRecibido.GetTipo()))
+        else if (listaDeResistencia!=null && listaDeResistencia.Contains(ataqueRecibido.GetTipo()))
         {
             this.vida -= ataqueRecibido.GetDaño()*0.5;
         }

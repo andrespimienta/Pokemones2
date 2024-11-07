@@ -69,7 +69,8 @@ public class Program
         do
         {
             fachada.InformeDeSituacion();
-            bool operacionExitosa = false;
+            bool operacionExitosa = false;// chequea si se realizo alguna operacion con exito
+                                          // de lo contrario muestra el menu principal de nuevo 
             do
             {
                
@@ -105,8 +106,11 @@ public class Program
 
                         } while (!seleccionExitosa && aux!="BACK");
 
-                        fachada.Atacar(aux); // Realiza el ataque con el ataque elegido
-                        operacionExitosa = true; // se concreto el ataque
+                        if (aux != "BACK")
+                        {
+                            fachada.Atacar(aux); // Realiza el ataque con el ataque elegido
+                            operacionExitosa = true; // se concreto el ataque
+                        }
                     }
                     else
                     {
