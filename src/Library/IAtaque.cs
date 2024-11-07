@@ -7,4 +7,6 @@ public interface IAtaque
     double GetDaño();
     bool GetEsEspecial();
     string GetDañoEspecial();
+    bool GetEsPreciso();
+    bool GetEsCritico();
 }

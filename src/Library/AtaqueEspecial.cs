@@ -40,8 +40,32 @@ public class AtaqueEspecial:IAtaque
     {
         return this.dañoEspecial;
     }
+
+    public bool GetEsCritico()
+    {
+        List<bool>critic = new List<bool> {true,false,false,false,false,false,false,false,false,false};
+        Random rand = new Random();
+        int indiceAleatorio = rand.Next(critic.Count);
+        if (critic[indiceAleatorio] == true)
+        {
+            Console.WriteLine("El ataque será crítico");
+        }
+        return critic[indiceAleatorio];
+    } //Devuelve si el crítico se da
     
-    
+    public bool GetEsPreciso()
+    {
+        List<bool>preciso = new List<bool> {true,false};
+        Random rand = new Random();
+        int indiceAleatorio = rand.Next(preciso.Count);
+        if (preciso[indiceAleatorio] == true)
+        {
+            Console.WriteLine("El ataque será preciso");
+        }
+        return preciso[indiceAleatorio];
+    }//Devuelve si el preciso se da
+
+
     List<string> dañosEspeciales = new List<string> { "Dormir", "Paralizar", "Envenenar", "Quemar" };
     
     //Constructor:

@@ -160,25 +160,37 @@ public class Fachada
                     if (ataque.GetNombre() == nombreAtaque)
                     {
                         double aux = pokemonVictima.GetVida();
-                        pokemonVictima.RecibirDaño(ataque);
-                        if (aux > pokemonVictima.GetVida())
+                        if (ataque.GetEsPreciso() == false)
                         {
-                            if (pokemonVictima.GetVida() <= 0)
+                            Console.WriteLine("El ataque no impactó");
+                        } //Si el ataque es preciso sigue el curso del ataque, sino tira mensaje de que no impactó
+                        else
+                        {
+                            pokemonVictima.RecibirDaño(ataque);
+                            if (ataque.GetEsCritico() == true)
                             {
-                                Console.WriteLine($"{pokemonVictima.GetNombre()} ha sido vencido");
+                                pokemonVictima.SetVida(ataque.GetDaño()*0.20);
+                                Console.WriteLine("¡El Ataque será Critico!");
+                            } 
+                            //Si el ataque es critico sigue el curso del ataque, sino tira mensaje de que no impactó
+                            if (aux > pokemonVictima.GetVida())
+                            {
+                                if (pokemonVictima.GetVida() <= 0)
+                                {
+                                    Console.WriteLine($"{pokemonVictima.GetNombre()} ha sido vencido");
 
+                                }
+                                else
+                                {
+                                    Console.WriteLine(
+                                        $"{pokemonVictima.GetNombre()} ha sufrido daño, su vida es {jugadorSinTurno.GetPokemonEnUso().GetVida()}");
+                                }
                             }
                             else
                             {
-                                Console.WriteLine(
-                                    $"{pokemonVictima.GetNombre()} ha sufrido daño, su vida es {jugadorSinTurno.GetPokemonEnUso().GetVida()}");
+                                Console.WriteLine($"{pokemonVictima.GetNombre()} salio ileso de ese ataque");
                             }
                         }
-                        else
-                        {
-                            Console.WriteLine($"{pokemonVictima.GetNombre()} salio ileso de ese ataque");
-                        }
-
                         return ataqueExitoso;
                     }
                 }

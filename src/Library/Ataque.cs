@@ -1,3 +1,5 @@
+using System.ComponentModel.Design.Serialization;
+
 namespace Proyecto_Pokemones_I;
 
 public class Ataque:IAtaque
@@ -35,7 +37,17 @@ public class Ataque:IAtaque
     {
         return null;
     }
+
+    public bool GetEsCritico()
+    {
+        return true;
+    }
     
+    public bool GetEsPreciso()
+    {
+        return true;
+    }
+
     //Constructor:
     public Ataque(string nombreAtaque, string tipoAtaque, double dañoAtaque, bool esEspecial)
     {
