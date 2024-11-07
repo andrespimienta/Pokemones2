@@ -11,6 +11,10 @@ public class Pokemon
     private double velocidadAtaque;
     private double probabilidadCritico;
     private List<IAtaque> listadoAtaques;
+    private List<string> listaDeDebilidades;
+    private List<string> listaDeResistencia;
+    private List<string> listaDeInmudidades;
+    
     public string Status { get; set;}
     
     //Getters:
@@ -61,7 +65,7 @@ public class Pokemon
     }
    
     //Constructor:
-    public Pokemon(string pokeNombre, string pokeTipo, double pokeVida, double pokeVelAtaque, double pokeProbCrit, List<IAtaque> ataques)
+    public Pokemon(string pokeNombre, string pokeTipo, double pokeVida, double pokeVelAtaque, double pokeProbCrit, List<IAtaque> ataques,List<string> debilidades,List<string> resistencias, List<string> inmuidades)
     {
         this.nombre = pokeNombre;
         this.tipo = pokeTipo;
@@ -71,17 +75,24 @@ public class Pokemon
         this.probabilidadCritico = pokeProbCrit;
         this.listadoAtaques = ataques;
         Status = null;
+        listaDeDebilidades = debilidades;
+        listaDeResistencia = resistencias;
+        listaDeInmudidades = inmuidades;
     }
 
     public void RecibirDaño(IAtaque ataqueRecibido)
     {
-        if (ataqueRecibido.GetTipo() == this.tipo)
+        if (listaDeInmudidades.Contains(ataqueRecibido.GetTipo()))
         {
-            this.vida -= (ataqueRecibido.GetDaño()) / 2;
+            //no hagas nada
         }
-        else
+        else if (listaDeDebilidades.Contains(ataqueRecibido.GetTipo()))
         {
-            this.vida -= ataqueRecibido.GetDaño();
+            this.vida -= ataqueRecibido.GetDaño()*2;
+        }
+        else if (listaDeResistencia.Contains(ataqueRecibido.GetTipo()))
+        {
+            this.vida -= ataqueRecibido.GetDaño()*0.5;
         }
 
         if (ataqueRecibido.GetEsEspecial() == true)

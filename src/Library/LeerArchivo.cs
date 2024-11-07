@@ -15,6 +15,111 @@ public class LeerArchivo
         Console.WriteLine("======================================================================");
     }
 
+    public static List<string>? EncontrarDebilidades(string tipoDelPokemon)
+   {
+        string[] lineas = File.ReadAllLines("C:\\Repositorios\\Pokemones2\\src\\Program\\Debilidades.txt");
+        int indice = -1;
+        List<string> debilidades = new List<string>();
+        
+
+        for (int i = 0; i < lineas.Length; i++)
+        {
+            // Comprueba si la línea contiene el nombre del Pokémon
+            if (lineas[i].Contains(tipoDelPokemon, StringComparison.OrdinalIgnoreCase))
+            {
+               
+                string[] datos = lineas[i].Split(',');
+
+                // Verifica si el primer elemento (nombre del Pokémon) coincide exactamente
+                if (datos.Length > 0 && datos[0].Trim().Equals(tipoDelPokemon, StringComparison.OrdinalIgnoreCase))
+                {
+                    indice = i; // Guarda el índice de la línea donde se encontró el Pokémon
+                    
+                    // Almacena las debilidades desde el segundo dato en adelante
+                    for (int j = 1; j < datos.Length; j++)
+                    {
+                        string debilidad = datos[j].Trim();
+                        debilidades.Add(debilidad); // Guarda cada debilidad en la lista
+                    }
+                    break; // Salir del bucle si se encuentra el Pokémon
+                }
+                
+            }
+            
+        }
+        return debilidades;
+   }
+    public static List<string>? EncontrarResostencias(string tipoDelPokemon)
+    {
+        string[] lineas = File.ReadAllLines("C:\\Repositorios\\Pokemones2\\src\\Program\\Resistencias.txt");
+        int indice = -1;
+        List<string> resistencias = new List<string>();
+        
+
+        for (int i = 0; i < lineas.Length; i++)
+        {
+            // Comprueba si la línea contiene el nombre del Pokémon
+            if (lineas[i].Contains(tipoDelPokemon, StringComparison.OrdinalIgnoreCase))
+            {
+               
+                string[] datos = lineas[i].Split(',');
+
+                // Verifica si el primer elemento (nombre del Pokémon) coincide exactamente
+                if (datos.Length > 0 && datos[0].Trim().Equals(tipoDelPokemon, StringComparison.OrdinalIgnoreCase))
+                {
+                    indice = i; // Guarda el índice de la línea donde se encontró el Pokémon
+                    
+                    // Almacena las debilidades desde el segundo dato en adelante
+                    for (int j = 1; j < datos.Length; j++)
+                    {
+                        string resistencia = datos[j].Trim();
+                        resistencias.Add(resistencia); // Guarda cada debilidad en la lista
+                    }
+                    break; // Salir del bucle si se encuentra el Pokémon
+                }
+                
+            }
+            
+        }
+        return resistencias;
+    }
+    public static List<string>? EncontrarInmunidades(string tipoDelPokemon)
+    {
+        string[] lineas = File.ReadAllLines("C:\\Repositorios\\Pokemones2\\src\\Program\\Resistencias.txt");
+        int indice = -1;
+        List<string> inmunidades = new List<string>();
+        
+
+        for (int i = 0; i < lineas.Length; i++)
+        {
+            // Comprueba si la línea contiene el nombre del Pokémon
+            if (lineas[i].Contains(tipoDelPokemon, StringComparison.OrdinalIgnoreCase))
+            {
+               
+                string[] datos = lineas[i].Split(',');
+
+                // Verifica si el primer elemento (nombre del Pokémon) coincide exactamente
+                if (datos.Length > 0 && datos[0].Trim().Equals(tipoDelPokemon, StringComparison.OrdinalIgnoreCase))
+                {
+                    indice = i; // Guarda el índice de la línea donde se encontró el Pokémon
+                    
+                    // Almacena las debilidades desde el segundo dato en adelante
+                    for (int j = 1; j < datos.Length; j++)
+                    {
+                        string inmunidad = datos[j].Trim();
+                        inmunidades.Add(inmunidad); // Guarda cada debilidad en la lista
+                    }
+                    break; // Salir del bucle si se encuentra el Pokémon
+                }
+                
+            }
+            
+        }
+        return inmunidades;
+    }
+    
+
+
     public static Pokemon? EncontrarPokemon(string nombrePokemon)
     {
         nombrePokemon = nombrePokemon.ToUpper();    // Evito errores por mayúsculas o minúsculas en el parámetro
@@ -83,9 +188,13 @@ public class LeerArchivo
                 pokeAtaques.Add(ataque2);
                 pokeAtaques.Add(ataque3);
                 pokeAtaques.Add(ataque4);
+
+                List<string> debilidades = EncontrarDebilidades(pokeTipo);
+                List<string> resistencias = EncontrarResistencias(pokeTipo);
+                List<string> inmunidades = EncontrarInmunidades(pokeTipo);
                 
                 //Instancia al Pokemon y lo devuelve:
-                Pokemon pokemon = new Pokemon(pokeNombre, pokeTipo, pokeVida, pokeVelAtaque, pokeProbCritico,pokeAtaques);
+                Pokemon pokemon = new Pokemon(pokeNombre, pokeTipo, pokeVida, pokeVelAtaque, pokeProbCritico,pokeAtaques,debilidades,resistencias,inmunidades);
                 return pokemon;
             }
             

@@ -1,0 +1,14 @@
+
+Eléctrico,Volador
+Agua,Agua,Fuego,Hielo	
+Bicho,Lucha, Planta, Tierra	-
+Dragón,Agua, Eléctrico, Fuego, Planta	-
+Eléctrico,Volador
+Fantasma,Veneno, Lucha, Normal
+Fuego,Bicho, Fuego, Planta	
+Hielo,Fuego, Lucha, Roca	Hielo	
+Planta,Agua, Eléctrico, Planta, Tierra	
+Roca,Fuego, Normal, Veneno, Volador	
+Tierra,Eléctrico	
+Veneno,Planta	Planta, Veneno	
+Volador,Bicho, Lucha, Planta, Tierra
