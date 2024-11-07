@@ -75,10 +75,10 @@ public class LeerArchivo
                 ataqueTipo = datos[15];
                 ataqueDaño = double.Parse(datos[16]);
                 ataqueEsEspecial = true;
-                Ataque ataque4 = new Ataque(ataqueNombre, ataqueTipo, ataqueDaño, ataqueEsEspecial);
+                AtaqueEspecial ataque4 = new AtaqueEspecial(ataqueNombre, ataqueTipo, ataqueDaño, ataqueEsEspecial);
                 
                 //Define el atributo Lista de Ataques del Pokemon:
-                List<Ataque> pokeAtaques = new List<Ataque>();
+                List<IAtaque> pokeAtaques = new List<IAtaque>();
                 pokeAtaques.Add(ataque1);
                 pokeAtaques.Add(ataque2);
                 pokeAtaques.Add(ataque3);

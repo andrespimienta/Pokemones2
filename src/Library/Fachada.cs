@@ -7,13 +7,14 @@ public class Fachada
     private List<Jugador> jugadores;
     private Jugador jugadorConTurno;
     private Jugador jugadorSinTurno;
-    
+
 
     //Getters:
     public Jugador GetJugadorConTurno()
     {
         return this.jugadorConTurno;
     }
+
     public Jugador GetJugadorSinTurno()
     {
         return this.jugadorSinTurno;
@@ -25,7 +26,8 @@ public class Fachada
         this.jugadores = new List<Jugador>();
         this.jugadores.Add(jugador1);
         this.jugadores.Add(jugador2);
-        this.jugadorConTurno = jugadores[0];  // Cuando se inicia por primera vez, es el turno del jugador 1 (posición 0 en la lista)
+        this.jugadorConTurno =
+            jugadores[0]; // Cuando se inicia por primera vez, es el turno del jugador 1 (posición 0 en la lista)
     }
 
     public void MostrarCatalogo()
@@ -49,18 +51,22 @@ public class Fachada
 
     public bool ElegirPokemon(string nombrePokemon)
     {
-        bool elecciónExitosa = true;    // Una simple variable para indicarle a Program si se efectuó o no la elección
-        
-        Pokemon? pokemonElegido = LeerArchivo.EncontrarPokemon(nombrePokemon);  // Intenta buscar el Pokemon indicado en el catálogo
-        if (pokemonElegido == null)     // Si no lo encontró o dio error, se cancela la elección del Pokemon
+        bool elecciónExitosa = true; // Una simple variable para indicarle a Program si se efectuó o no la elección
+
+        Pokemon?
+            pokemonElegido =
+                LeerArchivo.EncontrarPokemon(nombrePokemon); // Intenta buscar el Pokemon indicado en el catálogo
+        if (pokemonElegido == null) // Si no lo encontró o dio error, se cancela la elección del Pokemon
         {
             elecciónExitosa = false;
             return elecciónExitosa;
         }
 
-        foreach (Pokemon pokemon in jugadorConTurno.GetSeleccion()) // Intenta buscar el Pokemon indicado en la selección del jugador
+        foreach (Pokemon pokemon in
+                 jugadorConTurno.GetSeleccion()) // Intenta buscar el Pokemon indicado en la selección del jugador
         {
-            if (pokemon.GetNombre() == nombrePokemon)   // Si el Pokemon ya estaba en la selección, se cancela la elección del Pokemon
+            if (pokemon.GetNombre() ==
+                nombrePokemon) // Si el Pokemon ya estaba en la selección, se cancela la elección del Pokemon
             {
                 Console.WriteLine("¡Ya habías añadido ese Pokemon a tu selección!");
                 elecciónExitosa = false;
@@ -68,20 +74,23 @@ public class Fachada
             }
         }
 
-        jugadorConTurno.AñadirASeleccion(pokemonElegido);   // Si no se dio ninguno de los casos anteriores, añade al pokemon a la selección
+        jugadorConTurno
+            .AñadirASeleccion(
+                pokemonElegido); // Si no se dio ninguno de los casos anteriores, añade al pokemon a la selección
         return elecciónExitosa;
     }
 
     public bool CambiarPokemonPor(string nombrePokemon)
-    // FALTA AGREGAR CASO LÍMITE EN QUE SE ELIGE EL MISMO POKEMON QUE YA ESTÁ EN USO
+        // FALTA AGREGAR CASO LÍMITE EN QUE SE ELIGE EL MISMO POKEMON QUE YA ESTÁ EN USO
     {
-        bool cambioExitoso = true;  // Una simple variable para indicarle a Program si se efectuó o no el cambio
-        
-        foreach (Pokemon pokemon in jugadorConTurno.GetSeleccion()) // Intenta encontrar el Pokemon indicado en la selección del jugador
+        bool cambioExitoso = true; // Una simple variable para indicarle a Program si se efectuó o no el cambio
+
+        foreach (Pokemon pokemon in
+                 jugadorConTurno.GetSeleccion()) // Intenta encontrar el Pokemon indicado en la selección del jugador
         {
             if (pokemon.GetNombre() == nombrePokemon)
             {
-                if (pokemon.GetVida() > 0)      
+                if (pokemon.GetVida() > 0)
                 {
                     // Si encontró al Pokemon y todavía está vivo, realiza el cambio exitosamente
                     jugadorConTurno.GuardarPokemon();
@@ -92,11 +101,12 @@ public class Fachada
                 {
                     // Si encontró al Pokemon, pero está muerto, cancela el cambio
                     Console.WriteLine("Ese Pokemon está muerto, no puedes elegirlo");
-                    cambioExitoso = false;  
+                    cambioExitoso = false;
                     return cambioExitoso;
                 }
             }
         }
+
         // Si llegó a este punto es porque no encontró el Pokemon en la selección del jugador, por lo que cancela el cambio
         Console.WriteLine("No se encontró ese Pokemon en tu selección");
         cambioExitoso = false;
@@ -111,7 +121,7 @@ public class Fachada
     public bool EsAtaqueValido(string ataque)
     {
         // Obtener la lista de ataques del Pokémon en uso
-        List<Ataque> ataques = jugadorConTurno.GetPokemonEnUso().GetAtaques();
+        List<IAtaque> ataques = jugadorConTurno.GetPokemonEnUso().GetAtaques();
 
         // Verificar si algún ataque en la lista tiene el mismo nombre que el ataque pasado como parámetro
         return ataques.Any(a => a.GetNombre().Equals(ataque, StringComparison.OrdinalIgnoreCase));
@@ -121,38 +131,77 @@ public class Fachada
     {
         Pokemon pokemonVictima = jugadorSinTurno.GetPokemonEnUso();
         Pokemon pokemonAtacante = jugadorConTurno.GetPokemonEnUso();
-        
         bool ataqueExitoso = true;
-        // Si es el turno del Jugador 1, intentará efectuar el ataque indicado sobre el Pokemon en Uso del Jugador 2
-            foreach (Ataque ataque in pokemonAtacante.GetAtaques())
+        if (pokemonAtacante.GetStatus() != "Dormido") //Si el Pokemon que ataca no está dormido se efectua el ataque
+        {
+            if (pokemonAtacante.GetStatus() !=
+                "Paralizado") //Si el Pokemon que ataca no está paralizado se efectua el ataque
             {
-                // Si encontró el ataque especificado en la lista de ataques del Pokemon en uso del jugador, ataca al pokemon en uso del rival
-                if (ataque.GetNombre() == nombreAtaque)
+                if (pokemonAtacante.GetStatus() !=
+                    "Paralizado") //Si el Pokemon que ataca no está paralizado se efectua el ataque
                 {
-                    double aux=pokemonVictima.GetVida();
-                    pokemonVictima.RecibirDaño(ataque);
-                    if (aux > pokemonVictima.GetVida())
+                    if (pokemonVictima.GetStatus() !=
+                        "Envenenado")
                     {
-                        if (pokemonVictima.GetVida() <= 0)
+                        pokemonVictima.SetVida(5);
+                        Console.WriteLine(
+                            $"{pokemonVictima.GetNombre()} sufrirá más daño por estar envenenado, su vida es {jugadorSinTurno.GetPokemonEnUso().GetVida()}");
+                    } //Si el Pokemon que recibe daño está envenenado
+                    if (pokemonVictima.GetStatus() !=
+                        "Quemado")
+                    {
+                        pokemonVictima.SetVida(10);
+                        Console.WriteLine(
+                            $"{pokemonVictima.GetNombre()} sufrirá más daño por estar envenenado, su vida es {jugadorSinTurno.GetPokemonEnUso().GetVida()}");
+                    } //Si el Pokemon que recibe daño está envenenado
+
+                    // Si es el turno del Jugador 1, intentará efectuar el ataque indicado sobre el Pokemon en Uso del Jugador 2
+                    foreach (Ataque ataque in pokemonAtacante.GetAtaques())
+                    {
+                        // Si encontró el ataque especificado en la lista de ataques del Pokemon en uso del jugador, ataca al pokemon en uso del rival
+                        if (ataque.GetNombre() == nombreAtaque)
                         {
-                            Console.WriteLine($"{pokemonVictima.GetNombre()} ha sido vencido");
-                            
-                        }
-                        else
-                        {
-                            Console.WriteLine($"{pokemonVictima.GetNombre()} ha sufrido daño, su vida es {jugadorSinTurno.GetPokemonEnUso().GetVida()}");
+                            double aux = pokemonVictima.GetVida();
+                            pokemonVictima.RecibirDaño(ataque);
+                            if (aux > pokemonVictima.GetVida())
+                            {
+                                if (pokemonVictima.GetVida() <= 0)
+                                {
+                                    Console.WriteLine($"{pokemonVictima.GetNombre()} ha sido vencido");
+
+                                }
+                                else
+                                {
+                                    Console.WriteLine(
+                                        $"{pokemonVictima.GetNombre()} ha sufrido daño, su vida es {jugadorSinTurno.GetPokemonEnUso().GetVida()}");
+                                }
+                            }
+                            else
+                            {
+                                Console.WriteLine($"{pokemonVictima.GetNombre()} salio ileso de ese ataque");
+                            }
+
+                            return ataqueExitoso;
                         }
                     }
-                    else
-                    {
-                        Console.WriteLine($"{pokemonVictima.GetNombre()} salio ileso de ese ataque");
-                    }
-                    return ataqueExitoso;
+
+                    // Si llegó a este punto es porque no encontró el Ataque en las opciones del Pokemon, por lo que cancela el cambio
+                    ataqueExitoso = false;
+                }
+                else
+                {
+                    Console.WriteLine($"{pokemonAtacante.GetNombre()} Está Paralizado y no puede Atacar");
+
                 }
             }
-            // Si llegó a este punto es porque no encontró el Ataque en las opciones del Pokemon, por lo que cancela el cambio
-            ataqueExitoso = false;
-            return ataqueExitoso;
+            else
+            {
+                Console.WriteLine($"{pokemonAtacante.GetNombre()} Está Dormido y no puede Atacar");
+
+            }
+            
+        }
+        return ataqueExitoso;
     }
 
     public bool ChequeoPantallaFinal()

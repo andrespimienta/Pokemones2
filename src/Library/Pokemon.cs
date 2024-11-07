@@ -1,3 +1,5 @@
+using System.Runtime.CompilerServices;
+
 namespace Proyecto_Pokemones_I;
 
 public class Pokemon
@@ -7,7 +9,8 @@ public class Pokemon
     private double vida;
     private double velocidadAtaque;
     private double probabilidadCritico;
-    private List<Ataque> listadoAtaques;
+    private List<IAtaque> listadoAtaques;
+    private string status;
     
     //Getters:
     public string GetNombre()
@@ -22,6 +25,11 @@ public class Pokemon
     {
         return this.vida;
     }
+    
+    public void SetVida(double dañoEspecial)
+    {
+        this.vida = vida-dañoEspecial;
+    }
     public double GetVelocidadAtaque()
     {
         return this.velocidadAtaque;
@@ -30,16 +38,18 @@ public class Pokemon
     {
         return this.probabilidadCritico;
     }
-    public List<Ataque> GetAtaques()
+    public List<IAtaque> GetAtaques()
     {
         return this.listadoAtaques;
     }
+    
+    
 
     public string ListaDeAtaques()
     {  
         string resultado = "";
         
-        foreach (Ataque ataque in listadoAtaques)
+        foreach (IAtaque ataque in listadoAtaques)
         {
             string aux=ataque.GetNombre();
             Console.Write(aux + " / "); // Imprime cada nombre seguido de un espacio
@@ -50,8 +60,13 @@ public class Pokemon
         return resultado.Trim(); // Elimina el último espacio extra al final de la cadena
     }
 
+    public string GetStatus()
+    {
+        return this.status;
+}
+
     //Constructor:
-    public Pokemon(string pokeNombre, string pokeTipo, double pokeVida, double pokeVelAtaque, double pokeProbCrit, List<Ataque> ataques)
+    public Pokemon(string pokeNombre, string pokeTipo, double pokeVida, double pokeVelAtaque, double pokeProbCrit, List<IAtaque> ataques)
     {
         this.nombre = pokeNombre;
         this.tipo = pokeTipo;
@@ -59,9 +74,10 @@ public class Pokemon
         this.velocidadAtaque = pokeVelAtaque;
         this.probabilidadCritico = pokeProbCrit;
         this.listadoAtaques = ataques;
+        this.status = null;
     }
 
-    public void RecibirDaño(Ataque ataqueRecibido)
+    public void RecibirDaño(IAtaque ataqueRecibido)
     {
         if (ataqueRecibido.GetTipo() == this.tipo)
         {
@@ -70,6 +86,56 @@ public class Pokemon
         else
         {
             this.vida -= ataqueRecibido.GetDaño();
+        }
+
+        if (ataqueRecibido.GetEsEspecial() == true)
+        {
+            if (ataqueRecibido.GetDañoEspecial()=="Dormir")
+            {
+                if (this.status == null)
+                {
+                    this.status = "Dormido";
+                }
+                else
+                {
+                    Console.WriteLine($"El pokemon ya está {this.GetStatus()}");
+                }
+            }
+
+            if (ataqueRecibido.GetDañoEspecial() == "Paralizar")
+            {
+                if (this.status == null)
+                {
+                    this.status = "Paralizado";
+                }
+                else
+                {
+                    Console.WriteLine($"El pokemon ya está {this.GetStatus()}");
+                }
+            }
+            
+            if (ataqueRecibido.GetDañoEspecial() == "Envenenar")
+            { 
+                if (this.status == null)
+                {
+                    this.status = "Envenenado";                }
+                else
+                {
+                    Console.WriteLine($"El pokemon ya está {this.GetStatus()}");
+                }
+            }
+            
+            if (ataqueRecibido.GetDañoEspecial() == "Quemar")
+            {
+                if (this.status == null)
+                {
+                    this.status = "Quemado";
+                }
+                else
+                {
+                    Console.WriteLine($"El pokemon ya está {this.GetStatus()}");
+                }
+            }
         }
     }
 }
