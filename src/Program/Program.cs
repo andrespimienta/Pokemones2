@@ -25,7 +25,7 @@ public class Program
         
         for (int j= 0; j <= 1; j++) // lo repite para los dos jugadores
         {
-            for (int i = 1; i <= 2; i++)
+            for (int i = 1; i <= 1; i++)
             {
                 seleccionExitosa = false;
                 do
@@ -91,42 +91,62 @@ public class Program
 
                 if (input == "1") // Compara con "1" en lugar de 1
                 {
-                    string aux;
-                    do
+                    if (entrenadorConTurno.GetPokemonEnUso().Status != "Paralizado" &&
+                        entrenadorConTurno.GetPokemonEnUso().Status != "Dormido")
                     {
-                        Console.WriteLine("Elija un ataque: ");
-                        fachada.ListaAtaques(); // Muestra los ataques disponibles
-                        aux = Console.ReadLine().ToUpper();
-                        seleccionExitosa = fachada.EsAtaqueValido(aux);
+                        string aux;
+                        do
+                        {
+                            Console.WriteLine("Elija un ataque: ");
+                            fachada.ListaAtaques(); // Muestra los ataques disponibles
+                            Console.WriteLine("[BACK]");
+                            aux = Console.ReadLine().ToUpper();
+                            seleccionExitosa = fachada.EsAtaqueValido(aux);
 
-                    } while (!seleccionExitosa);
+                        } while (!seleccionExitosa && aux!="BACK");
 
-                    fachada.Atacar(aux); // Realiza el ataque con el ataque elegido
-                    operacionExitosa = true; // se concreto el ataque
-                   
+                        fachada.Atacar(aux); // Realiza el ataque con el ataque elegido
+                        operacionExitosa = true; // se concreto el ataque
+                    }
+                    else
+                    {
+                        Console.WriteLine("Tu pokemón se encuentra paralizado o dormido no puedes atacar");
+                    }
                 }
                 else if (input == "2")
                 {
-                    Console.WriteLine(
-                        $"{entrenadorConTurno.GetNombre()}, seleccione el Pokemon con el que desea combatir:");
+                    Console.WriteLine($"{entrenadorConTurno.GetNombre()}, seleccione el Pokemon con el que desea combatir:");
                     entrenadorConTurno.ListaDePokemones();
+                    Console.WriteLine("[BACK]");
                     input = Console.ReadLine().ToUpper();
-                    fachada.CambiarPokemonPor(input);
-                    operacionExitosa = true; // se concreto el cambio
-                    
+                    if (input != "BACK")
+                    {
+                        fachada.CambiarPokemonPor(input);
+                        operacionExitosa = true; // se concreto el cambio
+                    }
                 }
+
                 else if (input == "3")
                 {
                     entrenadorConTurno.GetListaDeItems();
+                    Console.WriteLine("[BACK]");
                     input = Console.ReadLine() ?? throw new InvalidOperationException();
-                    operacionExitosa = entrenadorConTurno.UsarItem(input);
-
+                    if (input != "BACK")
+                    {
+                        operacionExitosa = entrenadorConTurno.UsarItem(input);
+                    }
                 }
                 else if (input == "4")
                 {
                     Console.WriteLine("Has decidido rendirte. Fin de la batalla. /n");
-                    fachada.existeGanador = true;
-                    operacionExitosa = true;
+                    Console.WriteLine("Estas seguro:s/n");
+                    input = Console.ReadLine();
+                    input = input.ToUpper();
+                    if (input == "S")
+                    {
+                        fachada.existeGanador = true;
+                        operacionExitosa = true;
+                    }
                 }
                 else
                 {

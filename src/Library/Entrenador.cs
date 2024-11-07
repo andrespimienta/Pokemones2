@@ -61,7 +61,6 @@ public class Entrenador
             Console.Write($"{entry.Key} (x{entry.Value}) / ");
         }
     
-        Console.WriteLine(); // Salto de línea al final de la impresión
         return resultado.Trim(); // Elimina el último espacio extra al final de la cadena
     }
 
@@ -117,7 +116,7 @@ public class Entrenador
             }
         }
 
-        Console.WriteLine(); // Salto de línea al final de la impresión
+        Console.WriteLine();
         return resultado.Trim(); // Elimina el último espacio extra al final de la cadena
     }
 
@@ -132,7 +131,8 @@ public class Entrenador
         {   item.DescribirItem();
             Console.WriteLine("Desea usarlo: s/n");
             string aux = Console.ReadLine();
-            if (aux =="s")
+            aux = aux.ToUpper();// Evito errores por mayúsculas o minúsculas en el parámetro
+            if (aux =="S")
             {
                 // eliminar el ítem de la lista después de usarlo
                 listItems.Remove(item);

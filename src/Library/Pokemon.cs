@@ -57,7 +57,6 @@ public class Pokemon
             resultado += aux + " ";   // Agrega cada nombre a la cadena `resultado` seguido de un espacio
         }
 
-        Console.WriteLine(); // Salto de línea al final de la impresión
         return resultado.Trim(); // Elimina el último espacio extra al final de la cadena
     }
    
