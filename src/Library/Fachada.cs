@@ -51,8 +51,8 @@ public class Fachada
     public bool ElegirPokemon(string nombrePokemon)
     {
         bool elecciónExitosa = true;    // Una simple variable para indicarle a Program si se efectuó o no la elección
-        
-        Pokemon? pokemonElegido = LeerArchivo.EncontrarPokemon(nombrePokemon);  // Intenta buscar el Pokemon indicado en el catálogo
+
+        Pokemon pokemonElegido = LeerArchivo.EncontrarPokemon(nombrePokemon); // Intenta buscar el Pokemon indicado en el catálogo
         if (pokemonElegido == null)     // Si no lo encontró o dio error, se cancela la elección del Pokemon
         {
             elecciónExitosa = false;
