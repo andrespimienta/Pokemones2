@@ -167,7 +167,7 @@ public class Fachada
                         else
                         {
                             pokemonVictima.RecibirDaño(ataque);
-                            if (ataque.GetEsCritico() == true)
+                            if (ataque.GetEsCritico() == true && ataque.GetEsEspecial()==true) 
                             {
                                 pokemonVictima.SetVida(ataque.GetDaño()*0.20);
                                 Console.WriteLine("¡El Ataque será Critico!");
