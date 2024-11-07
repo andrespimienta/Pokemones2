@@ -7,10 +7,11 @@ public class Pokemon
     private string nombre;
     private string tipo;
     private double vida;
+    private double vidaMax;
     private double velocidadAtaque;
     private double probabilidadCritico;
     private List<IAtaque> listadoAtaques;
-    private string status;
+    public string Status { get; set;}
     
     //Getters:
     public string GetNombre()
@@ -59,22 +60,18 @@ public class Pokemon
         Console.WriteLine(); // Salto de línea al final de la impresión
         return resultado.Trim(); // Elimina el último espacio extra al final de la cadena
     }
-
-    public string GetStatus()
-    {
-        return this.status;
-}
-
+   
     //Constructor:
     public Pokemon(string pokeNombre, string pokeTipo, double pokeVida, double pokeVelAtaque, double pokeProbCrit, List<IAtaque> ataques)
     {
         this.nombre = pokeNombre;
         this.tipo = pokeTipo;
         this.vida = pokeVida;
+        this.vidaMax = pokeVida;
         this.velocidadAtaque = pokeVelAtaque;
         this.probabilidadCritico = pokeProbCrit;
         this.listadoAtaques = ataques;
-        this.status = null;
+        Status = null;
     }
 
     public void RecibirDaño(IAtaque ataqueRecibido)
@@ -92,50 +89,60 @@ public class Pokemon
         {
             if (ataqueRecibido.GetDañoEspecial()=="Dormir")
             {
-                if (this.status == null)
+                if (Status == null)
                 {
-                    this.status = "Dormido";
+                    Status = "Dormido";
                 }
                 else
                 {
-                    Console.WriteLine($"El pokemon ya está {this.GetStatus()}");
+                    Console.WriteLine($"El pokemon ya está {Status}");
                 }
             }
 
             if (ataqueRecibido.GetDañoEspecial() == "Paralizar")
             {
-                if (this.status == null)
+                if (Status== null)
                 {
-                    this.status = "Paralizado";
+                    Status = "Paralizado";
                 }
                 else
                 {
-                    Console.WriteLine($"El pokemon ya está {this.GetStatus()}");
+                    Console.WriteLine($"El pokemon ya está {Status}");
                 }
             }
             
             if (ataqueRecibido.GetDañoEspecial() == "Envenenar")
             { 
-                if (this.status == null)
+                if (Status == null)
                 {
-                    this.status = "Envenenado";                }
+                    Status = "Envenenado";                }
                 else
                 {
-                    Console.WriteLine($"El pokemon ya está {this.GetStatus()}");
+                    Console.WriteLine($"El pokemon ya está {Status}");
                 }
             }
             
             if (ataqueRecibido.GetDañoEspecial() == "Quemar")
             {
-                if (this.status == null)
+                if (Status == null)
                 {
-                    this.status = "Quemado";
+                    Status = "Quemado";
                 }
                 else
                 {
-                    Console.WriteLine($"El pokemon ya está {this.GetStatus()}");
+                    Console.WriteLine($"El pokemon ya está {Status}");
                 }
             }
         }
+    }
+
+    public void AumentarVida(double hp)
+    {
+        this.vida += hp;
+    }
+
+    public void Revivir()
+    {
+        this.vida = this.vidaMax / 2;
     }
 }

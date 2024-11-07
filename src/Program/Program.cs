@@ -10,11 +10,11 @@ public class Program
         
         Console.WriteLine("Ingrese su nombre, jugador 1: ");
         string nombreJugador = Console.ReadLine();
-        Jugador jugador1 = new Jugador(nombreJugador);
+        Entrenador jugador1 = new Entrenador(nombreJugador);
         
         Console.WriteLine("Ingrese su nombre, jugador 2: ");
         nombreJugador = Console.ReadLine();
-        Jugador jugador2 = new Jugador(nombreJugador);
+        Entrenador jugador2 = new Entrenador(nombreJugador);
         
         Fachada fachada = new Fachada(jugador1, jugador2);
         Console.WriteLine("======================================================================" +
@@ -45,22 +45,22 @@ public class Program
         Console.WriteLine("----------------------------------------------------------------------" +
                           $"\n\n                ⚔ INICIA EL COMBATE ⚔                      \n\n" +
                           "----------------------------------------------------------------------");
-        Jugador jugadorConTurno;
-        jugadorConTurno = fachada.GetJugadorConTurno();// para manejar mas facil la variable
+        Entrenador entrenadorConTurno;
+        entrenadorConTurno = fachada.GetJugadorConTurno();// para manejar mas facil la variable
         for (int i = 0; i <= 1; i++) 
         {
             seleccionExitosa = false;
             do
             {
-                Console.WriteLine($"{jugadorConTurno.GetNombre()}, seleccione el Pokemon con el que desea combatir:");
-                jugadorConTurno.ListaDePokemones();
+                Console.WriteLine($"{entrenadorConTurno.GetNombre()}, seleccione el Pokemon con el que desea combatir:");
+                entrenadorConTurno.ListaDePokemones();
                 input = Console.ReadLine().ToUpper();
                 seleccionExitosa = fachada.CambiarPokemonPor(input);
             } while (!seleccionExitosa);
 
-            Console.WriteLine($"{jugadorConTurno.GetNombre()} ha seleccionado a {input} para combatir");
+            Console.WriteLine($"{entrenadorConTurno.GetNombre()} ha seleccionado a {input} para combatir");
             fachada.CambiarTurno();
-            jugadorConTurno = fachada.GetJugadorConTurno();
+            entrenadorConTurno = fachada.GetJugadorConTurno();
         }
        
         fachada.ChequearQuienEmpieza();
@@ -69,55 +69,75 @@ public class Program
         do
         {
             fachada.InformeDeSituacion();
-            if (jugadorConTurno.GetPokemonEnUso().GetVida() > 0)
+            bool operacionExitosa = false;
+            do
             {
-                Console.WriteLine("Elija una acción: ");
-                Console.WriteLine("(1) Para atacar \n" +
-                                  "(2) Para cambiar de Pokemon \n" +
-                                  "(3) Para cancelar batalla y rendirse");
-
-                input = Console.ReadLine() ?? throw new InvalidOperationException();
-            }
-            else
-            { 
-                Console.WriteLine("Debes cambiar de pokemón");
-                input = "2"; 
-            }
-
-            if (input == "1") // Compara con "1" en lugar de 1
-            {
-                string aux;
-                do
+               
+                if (entrenadorConTurno.GetPokemonEnUso().GetVida() > 0)
                 {
-                    Console.WriteLine("Elija un ataque: ");
-                    fachada.ListaAtaques(); // Muestra los ataques disponibles
-                    aux = Console.ReadLine().ToUpper();
-                    seleccionExitosa = fachada.EsAtaqueValido(aux);
+                    Console.WriteLine("Elija una acción: ");
+                    Console.WriteLine("(1) Para atacar, " +
+                                      "(2) Para cambiar de Pokemon, " +
+                                      "(3) Para usar pocion, " +
+                                      "(4) Para cancelar batalla y rendirse\n ");
+
+                    input = Console.ReadLine() ?? throw new InvalidOperationException();
+                }
+                else
+                {
+                    Console.WriteLine("Debes cambiar de pokemón");
+                    input = "2";
+                }
+
+                if (input == "1") // Compara con "1" en lugar de 1
+                {
+                    string aux;
+                    do
+                    {
+                        Console.WriteLine("Elija un ataque: ");
+                        fachada.ListaAtaques(); // Muestra los ataques disponibles
+                        aux = Console.ReadLine().ToUpper();
+                        seleccionExitosa = fachada.EsAtaqueValido(aux);
+
+                    } while (!seleccionExitosa);
+
+                    fachada.Atacar(aux); // Realiza el ataque con el ataque elegido
+                    operacionExitosa = true; // se concreto el ataque
                    
-                } while (!seleccionExitosa);
-                
-                fachada.Atacar(aux); // Realiza el ataque con el ataque elegido
-                fachada.CambiarTurno();
-            }
-            else if (input == "2")
-            {
-                Console.WriteLine($"{jugadorConTurno.GetNombre()}, seleccione el Pokemon con el que desea combatir:");
-                jugadorConTurno.ListaDePokemones();
-                input = Console.ReadLine().ToUpper();
-                fachada.CambiarPokemonPor(input);
-                // Aquí puedes agregar el código para cambiar de Pokémon
-                fachada.CambiarTurno();
-            }
-            else if (input == "3")
-            {
-                Console.WriteLine("Has decidido rendirte. Fin de la batalla.");
-                // Aquí puedes agregar el código para finalizar la batalla
-            }
-            else
-            {
-                Console.WriteLine("Opción no válida. Inténtalo de nuevo.");
-            }
-           
+                }
+                else if (input == "2")
+                {
+                    Console.WriteLine(
+                        $"{entrenadorConTurno.GetNombre()}, seleccione el Pokemon con el que desea combatir:");
+                    entrenadorConTurno.ListaDePokemones();
+                    input = Console.ReadLine().ToUpper();
+                    fachada.CambiarPokemonPor(input);
+                    operacionExitosa = true; // se concreto el cambio
+                    
+                }
+                else if (input == "3")
+                {
+                    entrenadorConTurno.GetListaDeItems();
+                    input = Console.ReadLine() ?? throw new InvalidOperationException();
+                    operacionExitosa = entrenadorConTurno.UsarItem(input);
+
+                }
+                else if (input == "4")
+                {
+                    Console.WriteLine("Has decidido rendirte. Fin de la batalla. /n");
+                    fachada.existeGanador = true;
+                    operacionExitosa = true;
+                }
+                else
+                {
+                    Console.WriteLine("Opción no válida. Inténtalo de nuevo.");
+                }
+
+            } while (!operacionExitosa); // Cabe la posibilidad de que si la operacion no se concreto
+                                        // vuelva la menu de opciones para nuevamente tomar una desicion
+                                        // de esta forma no se pierda el turno, ante una operacion trunca.
+            fachada.CambiarTurno();
+            entrenadorConTurno = fachada.GetJugadorConTurno();
         } while (!fachada.ChequeoPantallaFinal());
     }
 }
