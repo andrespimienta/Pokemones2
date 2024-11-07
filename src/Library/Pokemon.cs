@@ -90,9 +90,16 @@ public class Pokemon
         {
             this.vida -= ataqueRecibido.GetDaño()*2;
         }
-        else if (listaDeResistencia!=null && listaDeResistencia.Contains(ataqueRecibido.GetTipo()))
+        else
         {
-            this.vida -= ataqueRecibido.GetDaño()*0.5;
+            if (listaDeResistencia != null && listaDeResistencia.Contains(ataqueRecibido.GetTipo()))
+            {
+                this.vida -= ataqueRecibido.GetDaño() * 0.5;
+            }
+            else // el tipo de ataque no pertenece a debilidad,resistencia ni inmunidad
+            {
+                this.vida -= ataqueRecibido.GetDaño();
+            }
         }
 
         if (ataqueRecibido.GetEsEspecial() == true)
