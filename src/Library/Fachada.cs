@@ -140,20 +140,20 @@ public class Fachada
                 if (pokemonAtacante.GetStatus() !=
                     "Paralizado") //Si el Pokemon que ataca no está paralizado se efectua el ataque
                 {
-                    if (pokemonVictima.GetStatus() !=
-                        "Envenenado")
+                    if (pokemonVictima.GetStatus() ==
+                        "Envenenado") 
                     {
                         pokemonVictima.SetVida(5);
                         Console.WriteLine(
                             $"{pokemonVictima.GetNombre()} sufrirá más daño por estar envenenado, su vida es {jugadorSinTurno.GetPokemonEnUso().GetVida()}");
                     } //Si el Pokemon que recibe daño está envenenado
-                    if (pokemonVictima.GetStatus() !=
+                    if (pokemonVictima.GetStatus() ==
                         "Quemado")
                     {
                         pokemonVictima.SetVida(10);
                         Console.WriteLine(
-                            $"{pokemonVictima.GetNombre()} sufrirá más daño por estar envenenado, su vida es {jugadorSinTurno.GetPokemonEnUso().GetVida()}");
-                    } //Si el Pokemon que recibe daño está envenenado
+                            $"{pokemonVictima.GetNombre()} sufrirá más daño por estar quemado, su vida es {jugadorSinTurno.GetPokemonEnUso().GetVida()}");
+                    } //Si el Pokemon que recibe daño está quemado
 
                     // Si es el turno del Jugador 1, intentará efectuar el ataque indicado sobre el Pokemon en Uso del Jugador 2
                     foreach (Ataque ataque in pokemonAtacante.GetAtaques())
