@@ -137,71 +137,65 @@ public class Fachada
             if (pokemonAtacante.GetStatus() !=
                 "Paralizado") //Si el Pokemon que ataca no está paralizado se efectua el ataque
             {
-                if (pokemonAtacante.GetStatus() !=
-                    "Paralizado") //Si el Pokemon que ataca no está paralizado se efectua el ataque
+                if (pokemonVictima.GetStatus() ==
+                    "Envenenado")
                 {
-                    if (pokemonVictima.GetStatus() ==
-                        "Envenenado") 
-                    {
-                        pokemonVictima.SetVida(5);
-                        Console.WriteLine(
-                            $"{pokemonVictima.GetNombre()} sufrirá más daño por estar envenenado, su vida es {jugadorSinTurno.GetPokemonEnUso().GetVida()}");
-                    } //Si el Pokemon que recibe daño está envenenado
-                    if (pokemonVictima.GetStatus() ==
-                        "Quemado")
-                    {
-                        pokemonVictima.SetVida(10);
-                        Console.WriteLine(
-                            $"{pokemonVictima.GetNombre()} sufrirá más daño por estar quemado, su vida es {jugadorSinTurno.GetPokemonEnUso().GetVida()}");
-                    } //Si el Pokemon que recibe daño está quemado
+                    pokemonVictima.SetVida(5);
+                    Console.WriteLine(
+                        $"{pokemonVictima.GetNombre()} sufrirá más daño por estar envenenado, su vida es {jugadorSinTurno.GetPokemonEnUso().GetVida()}");
+                } //Si el Pokemon que recibe daño está envenenado
 
-                    // Si es el turno del Jugador 1, intentará efectuar el ataque indicado sobre el Pokemon en Uso del Jugador 2
-                    foreach (Ataque ataque in pokemonAtacante.GetAtaques())
+                if (pokemonVictima.GetStatus() ==
+                    "Quemado")
+                {
+                    pokemonVictima.SetVida(10);
+                    Console.WriteLine(
+                        $"{pokemonVictima.GetNombre()} sufrirá más daño por estar quemado, su vida es {jugadorSinTurno.GetPokemonEnUso().GetVida()}");
+                } //Si el Pokemon que recibe daño está quemado
+
+                // Si es el turno del Jugador 1, intentará efectuar el ataque indicado sobre el Pokemon en Uso del Jugador 2
+                foreach (IAtaque ataque in pokemonAtacante.GetAtaques())
+                {
+                    // Si encontró el ataque especificado en la lista de ataques del Pokemon en uso del jugador, ataca al pokemon en uso del rival
+                    if (ataque.GetNombre() == nombreAtaque)
                     {
-                        // Si encontró el ataque especificado en la lista de ataques del Pokemon en uso del jugador, ataca al pokemon en uso del rival
-                        if (ataque.GetNombre() == nombreAtaque)
+                        double aux = pokemonVictima.GetVida();
+                        pokemonVictima.RecibirDaño(ataque);
+                        if (aux > pokemonVictima.GetVida())
                         {
-                            double aux = pokemonVictima.GetVida();
-                            pokemonVictima.RecibirDaño(ataque);
-                            if (aux > pokemonVictima.GetVida())
+                            if (pokemonVictima.GetVida() <= 0)
                             {
-                                if (pokemonVictima.GetVida() <= 0)
-                                {
-                                    Console.WriteLine($"{pokemonVictima.GetNombre()} ha sido vencido");
+                                Console.WriteLine($"{pokemonVictima.GetNombre()} ha sido vencido");
 
-                                }
-                                else
-                                {
-                                    Console.WriteLine(
-                                        $"{pokemonVictima.GetNombre()} ha sufrido daño, su vida es {jugadorSinTurno.GetPokemonEnUso().GetVida()}");
-                                }
                             }
                             else
                             {
-                                Console.WriteLine($"{pokemonVictima.GetNombre()} salio ileso de ese ataque");
+                                Console.WriteLine(
+                                    $"{pokemonVictima.GetNombre()} ha sufrido daño, su vida es {jugadorSinTurno.GetPokemonEnUso().GetVida()}");
                             }
-
-                            return ataqueExitoso;
                         }
+                        else
+                        {
+                            Console.WriteLine($"{pokemonVictima.GetNombre()} salio ileso de ese ataque");
+                        }
+
+                        return ataqueExitoso;
                     }
-
-                    // Si llegó a este punto es porque no encontró el Ataque en las opciones del Pokemon, por lo que cancela el cambio
-                    ataqueExitoso = false;
                 }
-                else
-                {
-                    Console.WriteLine($"{pokemonAtacante.GetNombre()} Está Paralizado y no puede Atacar");
 
-                }
+                // Si llegó a este punto es porque no encontró el Ataque en las opciones del Pokemon, por lo que cancela el cambio
+                ataqueExitoso = false;
             }
             else
             {
-                Console.WriteLine($"{pokemonAtacante.GetNombre()} Está Dormido y no puede Atacar");
-
+                Console.WriteLine($"{pokemonAtacante.GetNombre()} Está Paralizado y no puede Atacar");
             }
-            
         }
-        return ataqueExitoso;
+        else
+        {
+            Console.WriteLine($"{pokemonAtacante.GetNombre()} Está Dormido y no puede Atacar");
+        }
+    return ataqueExitoso;
     }
 
     public bool ChequeoPantallaFinal()
