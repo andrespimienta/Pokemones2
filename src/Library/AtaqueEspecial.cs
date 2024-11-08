@@ -5,9 +5,7 @@ public class AtaqueEspecial:IAtaque
     private string nombre;
     private string tipo;
     private double daño;
-    private bool especial;
     private double precision;
-    private double probCritico;
     private string dañoEspecial;
 
     //Getters:
