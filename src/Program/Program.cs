@@ -7,6 +7,7 @@ public class Program
 {
     static void Main()
     {
+        DiccionarioTipos.GetInstancia();    // Instancia el Singleton y define el contenido de todos sus diccionarios
         
         Console.WriteLine("Ingrese su nombre, jugador 1: ");
         string nombreJugador = Console.ReadLine();
