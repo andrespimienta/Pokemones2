@@ -10,8 +10,6 @@ public class Pokemon
     private double vidaMax;
     private double velocidadAtaque;
     private List<IAtaque> listadoAtaques;
-
-    
     public string EfectoActivo { get; set;}
     
     //Getters:
@@ -54,57 +52,64 @@ public class Pokemon
         this.vida = vida-dañoEspecial;
     }
     
-    public string ListaDeAtaques()
-    {  
-        string resultado = "";
-        
-        foreach (IAtaque ataque in listadoAtaques)
-        {
-            string aux=ataque.GetNombre();
-            Console.Write(aux + " / "); // Imprime cada nombre seguido de un espacio
-            resultado += aux + " ";   // Agrega cada nombre a la cadena `resultado` seguido de un espacio
-        }
-
-        return resultado.Trim(); // Elimina el último espacio extra al final de la cadena
-    }
-
     public void RecibirDaño(IAtaque ataqueRecibido)
     {
         DiccionarioTipos.GetInstancia();
         List<string> listaDebilidades = DiccionarioTipos.GetDebilContra(this.tipo);
         List<string> listaResistencias = DiccionarioTipos.GetResistenteContra(this.tipo);
         List<string> listaInmunidades = DiccionarioTipos.GetInmuneContra(this.tipo);
-        
-        if (listaInmunidades.Contains(ataqueRecibido.GetTipo()))    // Si el tipo del ataque está en los tipos a los que es inmune, Daño x0
-        {
-            this.vida -= ataqueRecibido.GetDaño() * 0;
-        }
-        else if (listaResistencias.Contains(ataqueRecibido.GetTipo()))  // Si el tipo del ataque está en los tipos a los que es resistente, Daño x0.5
-        {
-            this.vida -= ataqueRecibido.GetDaño() * 0.5;
-        }
-        else if (listaDebilidades.Contains(ataqueRecibido.GetTipo()))   // Si el tipo del ataque está en los tipos a los que es débil, Daño x2
-        {
-                this.vida -= ataqueRecibido.GetDaño() * 2;
-        }
-        else    // Si el tipo del ataque no pertenece a los tipos a los que es inmune, resistente, ni débil, Daño x1
-        {
-                this.vida -= ataqueRecibido.GetDaño();
-        }
-        
+        double dañoTotal = 0;
 
-        if (ataqueRecibido.GetEsEspecial() == true)
+        // Si el ataque fue preciso (resultado aplicar el Probabilometro a la Precision), calculará el daño:
+        if (ProbabilityUtils.Probabilometro(ataqueRecibido.GetPrecision()))   
         {
-            string efectoAtaque = ataqueRecibido.GetEfecto();
-            if (EfectoActivo == null)
+            if (listaInmunidades.Contains(ataqueRecibido.GetTipo()))    // Si el tipo del ataque está en los tipos a los que es inmune, Daño x0
             {
-                    EfectoActivo = efectoAtaque.Substring(0,efectoAtaque.Length - 1) + "do";
+                dañoTotal = ataqueRecibido.GetDaño() * 0;
+            }
+            else if (listaResistencias.Contains(ataqueRecibido.GetTipo()))  // Si el tipo del ataque está en los tipos a los que es resistente, Daño x0.5
+            {
+                dañoTotal = ataqueRecibido.GetDaño() * 0.5;
+            }
+            else if (listaDebilidades.Contains(ataqueRecibido.GetTipo()))   // Si el tipo del ataque está en los tipos a los que es débil, Daño x2
+            {
+                dañoTotal = ataqueRecibido.GetDaño() * 2;
+            }
+            else    // Si el tipo del ataque no pertenece a los tipos a los que es inmune, resistente, ni débil, Daño x1
+            {
+                dañoTotal = ataqueRecibido.GetDaño();
+            }
+            
+            
+            // Si fue preciso y además crítico (aplica Probabilomtero al 10% de chance), agrega un 20% extra de daño:
+            if (ProbabilityUtils.Probabilometro(10))
+            {
+                dañoTotal = dañoTotal * 1.20;
+                Console.WriteLine($"¡El ataque fue crítico, {this.nombre} recibió daño extra!");
+            }
+            this.vida -= dañoTotal; // Cuando se calculó finalmente el daño, se lo resta a la vida
+            
+
+            // Si fue preciso y además era un ataque Especial, intentará aplicarle el efecto:
+            if (ataqueRecibido.GetEsEspecial() == true)
+            {
+                string efectoAtaque = ataqueRecibido.GetEfecto();
+                if (EfectoActivo == null)
+                {
+                    EfectoActivo = efectoAtaque.Substring(0,efectoAtaque.Length - 1) + "DO";
                     // Aclaración: "Dormi" + "do" | "Paraliza" + "do" | "Envenena" + "do" | "Quema" + "do"
+                    Console.WriteLine($"{this.nombre} ahora está {EfectoActivo}");
+                }
+                else
+                {
+                    Console.WriteLine($"El pokemon ya está {EfectoActivo}");
+                }
             }
-            else
-            {
-                Console.WriteLine($"El pokemon ya está {EfectoActivo}");
-            }
+        }
+        // Si el ataque no fue preciso, no hace nada (no resta vida ni provoca efecto, lo erra)
+        else
+        {
+            Console.WriteLine($"¡El ataque fue impreciso, no impactó!");
         }
     }
 

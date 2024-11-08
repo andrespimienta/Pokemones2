@@ -6,7 +6,7 @@ public class AtaqueEspecial:IAtaque
     private string nombre;
     private string tipo;
     private double daño;
-    private double precision;
+    private int precision;
     private string efectoNegativo;
     private bool esEspecial;
 
@@ -23,7 +23,7 @@ public class AtaqueEspecial:IAtaque
     {
         return this.daño;
     }
-    public double GetPrecision()
+    public int GetPrecision()
     {
         return this.precision;
     }
@@ -63,7 +63,7 @@ public class AtaqueEspecial:IAtaque
     
     
     //Constructor:
-    public AtaqueEspecial(string nombreAtaque, string tipoAtaque, double dañoAtaque, double precisionAtaque, string efecto)
+    public AtaqueEspecial(string nombreAtaque, string tipoAtaque, double dañoAtaque, int precisionAtaque, string efecto)
     {
         this.nombre = nombreAtaque;
         this.tipo = tipoAtaque;

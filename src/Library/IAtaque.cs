@@ -6,7 +6,7 @@ public interface IAtaque
     string GetNombre();
     string GetTipo();
     double GetDaño();
-    double GetPrecision();
+    int GetPrecision();
     bool GetEsEspecial();
     string? GetEfecto();
 }

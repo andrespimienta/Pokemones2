@@ -70,11 +70,10 @@ public class Program
         do
         {
             fachada.InformeDeSituacion();
-            bool operacionExitosa = false;// chequea si se realizo alguna operacion con exito
+            bool operacionExitosa = false;// chequea si se realizó alguna operación con éxito
                                           // de lo contrario muestra el menu principal de nuevo 
             do
             {
-               
                 if (entrenadorConTurno.GetPokemonEnUso().GetVida() > 0)
                 {
                     Console.WriteLine("Elija una acción: ");
@@ -96,22 +95,17 @@ public class Program
                     if (entrenadorConTurno.GetPokemonEnUso().EfectoActivo != "Paralizado" &&
                         entrenadorConTurno.GetPokemonEnUso().EfectoActivo != "Dormido")
                     {
-                        string aux;
+                        string respuestaUsuario;
                         do
                         {
                             Console.WriteLine("Elija un ataque: ");
                             fachada.ListaAtaques(); // Muestra los ataques disponibles
                             Console.WriteLine("[BACK]");
-                            aux = Console.ReadLine().ToUpper();
-                            seleccionExitosa = fachada.EsAtaqueValido(aux);
+                            respuestaUsuario = Console.ReadLine().ToUpper();
+                            seleccionExitosa = fachada.Atacar(respuestaUsuario); // Intenta realizar el ataque con lo que recibio del usuario
+                            operacionExitosa = true; // se concretó el ataque
 
-                        } while (!seleccionExitosa && aux!="BACK");
-
-                        if (aux != "BACK")
-                        {
-                            fachada.Atacar(aux); // Realiza el ataque con el ataque elegido
-                            operacionExitosa = true; // se concreto el ataque
-                        }
+                        } while (!seleccionExitosa && respuestaUsuario!="BACK");
                     }
                     else
                     {
