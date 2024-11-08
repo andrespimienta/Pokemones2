@@ -8,6 +8,7 @@ public class AtaqueEspecial:IAtaque
     private double daño;
     private double precision;
     private string efectoNegativo;
+    private bool esEspecial;
 
     // Getters:
     public string GetNombre()
@@ -29,6 +30,10 @@ public class AtaqueEspecial:IAtaque
     public string GetEfecto()
     {
         return this.efectoNegativo;
+    }
+    public bool GetEsEspecial()
+    {
+        return this.esEspecial;
     }
 
     public bool GetEsCritico()
@@ -65,5 +70,6 @@ public class AtaqueEspecial:IAtaque
         this.daño = dañoAtaque;
         this.precision = precisionAtaque;
         this.efectoNegativo = efecto;
+        this.esEspecial = true;
     }
 }

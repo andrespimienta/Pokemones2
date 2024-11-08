@@ -1,3 +1,4 @@
+#nullable enable
 namespace Proyecto_Pokemones_I;
 
 public interface IAtaque
@@ -6,4 +7,6 @@ public interface IAtaque
     string GetTipo();
     double GetDaño();
     double GetPrecision();
+    bool GetEsEspecial();
+    string? GetEfecto();
 }

@@ -9,7 +9,7 @@ public class Pokemon
     private double vida;
     private double vidaMax;
     private double velocidadAtaque;
-    private double probabilidadCritico;
+   
     private List<IAtaque> listadoAtaques;
     private List<string> listaDeDebilidades;
     private List<string> listaDeResistencia;
@@ -30,7 +30,6 @@ public class Pokemon
     {
         return this.vida;
     }
-    
     public void SetVida(double dañoEspecial)
     {
         this.vida = vida-dañoEspecial;
@@ -38,10 +37,6 @@ public class Pokemon
     public double GetVelocidadAtaque()
     {
         return this.velocidadAtaque;
-    }
-    public double GetProbabilidadCritico()
-    {
-        return this.probabilidadCritico;
     }
     public List<IAtaque> GetAtaques()
     {
@@ -65,19 +60,15 @@ public class Pokemon
     }
    
     //Constructor:
-    public Pokemon(string pokeNombre, string pokeTipo, double pokeVida, double pokeVelAtaque, double pokeProbCrit, List<IAtaque> ataques,List<string> debilidades,List<string> resistencias, List<string> inmuidades)
+    public Pokemon(string pokeNombre, string pokeTipo, double pokeVida, double pokeVelAtaque, List<IAtaque> ataques)
     {
         this.nombre = pokeNombre;
         this.tipo = pokeTipo;
         this.vida = pokeVida;
         this.vidaMax = pokeVida;
         this.velocidadAtaque = pokeVelAtaque;
-        this.probabilidadCritico = pokeProbCrit;
         this.listadoAtaques = ataques;
         Status = null;
-        listaDeDebilidades = debilidades;
-        listaDeResistencia = resistencias;
-        listaDeInmudidades = inmuidades;
     }
 
     public void RecibirDaño(IAtaque ataqueRecibido)
@@ -104,7 +95,7 @@ public class Pokemon
 
         if (ataqueRecibido.GetEsEspecial() == true)
         {
-            if (ataqueRecibido.GetDañoEspecial()=="Dormir")
+            if (ataqueRecibido.GetEfecto()=="Dormir")
             {
                 if (Status == null)
                 {
@@ -116,7 +107,7 @@ public class Pokemon
                 }
             }
 
-            if (ataqueRecibido.GetDañoEspecial() == "Paralizar")
+            if (ataqueRecibido.GetEfecto() == "Paralizar")
             {
                 if (Status== null)
                 {
@@ -128,7 +119,7 @@ public class Pokemon
                 }
             }
             
-            if (ataqueRecibido.GetDañoEspecial() == "Envenenar")
+            if (ataqueRecibido.GetEfecto() == "Envenenar")
             { 
                 if (Status == null)
                 {
@@ -139,7 +130,7 @@ public class Pokemon
                 }
             }
             
-            if (ataqueRecibido.GetDañoEspecial() == "Quemar")
+            if (ataqueRecibido.GetEfecto() == "Quemar")
             {
                 if (Status == null)
                 {

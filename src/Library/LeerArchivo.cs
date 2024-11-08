@@ -72,42 +72,42 @@ public static class LeerArchivo
         if (indice != -1)
         {
             string[] datos = lineas[indice].Split(',');
-            if (datos.Length == 17)
+            if (datos.Length == 21)
             {
                 //Encuentra y asigna los atributos del Pokemon:
                 string pokeNombre = datos[0];
                 string pokeTipo = datos[1];
                 double pokeVida = double.Parse(datos[2]);
                 double pokeVelAtaque = double.Parse(datos[3]);
-                double pokeProbCritico = double.Parse(datos[4]);
 
                 //Encuentra y crea el Ataque 1:
-                string ataqueNombre = datos[5];
-                string ataqueTipo = datos[6];
-                double ataqueDaño = double.Parse(datos[7]);
-                bool ataqueEsEspecial = false;
-                Ataque ataque1 = new Ataque(ataqueNombre, ataqueTipo, ataqueDaño, ataqueEsEspecial);
+                string ataqueNombre = datos[4];
+                string ataqueTipo = datos[5];
+                double ataqueDaño = double.Parse(datos[6]);
+                double ataquePrecision = double.Parse(datos[7]);
+                Ataque ataque1 = new Ataque(ataqueNombre, ataqueTipo, ataqueDaño, ataquePrecision);
 
                 //Encuentra y crea el Ataque 2:
                 ataqueNombre = datos[8];
                 ataqueTipo = datos[9];
                 ataqueDaño = double.Parse(datos[10]);
-                ataqueEsEspecial = false;
-                Ataque ataque2 = new Ataque(ataqueNombre, ataqueTipo, ataqueDaño, ataqueEsEspecial);
+                ataquePrecision = double.Parse(datos[11]);
+                Ataque ataque2 = new Ataque(ataqueNombre, ataqueTipo, ataqueDaño, ataquePrecision);
 
                 //Encuentra y crea el Ataque 3:
-                ataqueNombre = datos[11];
-                ataqueTipo = datos[12];
-                ataqueDaño = double.Parse(datos[13]);
-                ataqueEsEspecial = true;
-                Ataque ataque3 = new Ataque(ataqueNombre, ataqueTipo, ataqueDaño, ataqueEsEspecial);
+                ataqueNombre = datos[12];
+                ataqueTipo = datos[13];
+                ataqueDaño = double.Parse(datos[14]);
+                ataquePrecision = double.Parse(datos[15]);
+                Ataque ataque3 = new Ataque(ataqueNombre, ataqueTipo, ataqueDaño, ataquePrecision);
 
                 //Encuentra y crea el Ataque 4:
-                ataqueNombre = datos[14];
-                ataqueTipo = datos[15];
-                ataqueDaño = double.Parse(datos[16]);
-                ataqueEsEspecial = true;
-                AtaqueEspecial ataque4 = new AtaqueEspecial(ataqueNombre, ataqueTipo, ataqueDaño, ataqueEsEspecial);
+                ataqueNombre = datos[16];
+                ataqueTipo = datos[17];
+                ataqueDaño = double.Parse(datos[18]);
+                ataquePrecision = double.Parse(datos[19]);
+                string ataqueEfecto = datos[20];
+                AtaqueEspecial ataque4 = new AtaqueEspecial(ataqueNombre, ataqueTipo, ataqueDaño, ataquePrecision, ataqueEfecto);
 
                 //Define el atributo Lista de Ataques del Pokemon:
                 List<IAtaque> pokeAtaques = new List<IAtaque>();
@@ -126,8 +126,7 @@ public static class LeerArchivo
 
 
                 //Instancia al Pokemon y lo devuelve:
-                Pokemon pokemon = new Pokemon(pokeNombre, pokeTipo, pokeVida, pokeVelAtaque, pokeProbCritico,
-                    pokeAtaques, debilidades, resistencias, inmunidades);
+                Pokemon pokemon = new Pokemon(pokeNombre, pokeTipo, pokeVida, pokeVelAtaque, pokeAtaques);
                 return pokemon;
             }
             // Si faltan datos en la línea, devuelve el error:
