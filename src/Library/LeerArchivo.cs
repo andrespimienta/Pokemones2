@@ -17,37 +17,7 @@ public static class LeerArchivo
 
         Console.WriteLine("======================================================================");
     }
-    public static List<string>? Encontrar(string tipoDelPokemon, string path)
-    {
-        string[] lineas = File.ReadAllLines(path);
-        List<string> informaciones = new List<string>(); // Puede ser debilidad, resistencia o inmunidad
-
-        for (int i = 0; i < lineas.Length; i++)
-        {
-            // Comprueba si la línea contiene el nombre del Pokémon
-            if (lineas[i].Contains(tipoDelPokemon, StringComparison.OrdinalIgnoreCase))
-            {
-                string[] datos = lineas[i].Split(',');
-
-                // Verifica si el primer elemento (nombre del Pokémon) coincide exactamente
-                if (datos.Length > 0 && datos[0].Trim().Equals(tipoDelPokemon, StringComparison.OrdinalIgnoreCase))
-                {
-                    // Almacena las debilidades desde el segundo dato en adelante
-                    for (int j = 1; j < datos.Length; j++)
-                    {
-                        string info = datos[j].Trim();
-                        informaciones.Add(info); // Guarda cada debilidad en la lista
-                    }
-
-                    break; // Salir del bucle si se encuentra el Pokémon
-                }
-            }
-        }
-
-        // Si no se encontró información, devolver null
-        return informaciones.Count > 0 ? informaciones : null;
-    }
-
+    
     public static Pokemon? EncontrarPokemon(string nombrePokemon)
     {
         nombrePokemon = nombrePokemon.ToUpper(); // Evito errores por mayúsculas o minúsculas en el parámetro
@@ -115,15 +85,6 @@ public static class LeerArchivo
                 pokeAtaques.Add(ataque2);
                 pokeAtaques.Add(ataque3);
                 pokeAtaques.Add(ataque4);
-
-                /*string path1 = @"C:\Repositorios\Pokemones2\src\Program\Debilidades.txt";
-                string path2 = @"C:\Repositorios\Pokemones2\src\Program\Resistencias.txt";
-                string path3 = @"C:\Repositorios\Pokemones2\src\Program\Inmunudidades.txt";
-
-                List<string> debilidades = Encontrar(pokeTipo, path1);
-                List<string> resistencias = Encontrar(pokeTipo, path2);
-                List<string> inmunidades = Encontrar(pokeTipo, path3);*/
-
 
                 //Instancia al Pokemon y lo devuelve:
                 Pokemon pokemon = new Pokemon(pokeNombre, pokeTipo, pokeVida, pokeVelAtaque, pokeAtaques);
