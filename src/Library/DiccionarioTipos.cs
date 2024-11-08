@@ -4,9 +4,9 @@ public class DiccionarioTipos
 {
     // Clase Singleton, no es necesario instanciarla más de una vez
     private static DiccionarioTipos instancia;
-    private Dictionary<string, List<string>> diccDebilContra = new Dictionary<string, List<string>>();
-    private Dictionary<string, List<string>> diccResistenteContra= new Dictionary<string, List<string>>();
-    private Dictionary<string, List<string>> diccInmuneContra= new Dictionary<string, List<string>>();
+    private static Dictionary<string, List<string>> diccDebilContra = new Dictionary<string, List<string>>();
+    private static Dictionary<string, List<string>> diccResistenteContra= new Dictionary<string, List<string>>();
+    private static Dictionary<string, List<string>> diccInmuneContra= new Dictionary<string, List<string>>();
 
     // Métodos:
     public static DiccionarioTipos GetInstancia()
@@ -18,15 +18,15 @@ public class DiccionarioTipos
         return instancia;
     }
 
-    public List<string> GetDebilContra(string tipo)
+    public static List<string> GetDebilContra(string tipo)
     {
         return diccDebilContra[tipo];
     }
-    public List<string> GetResistenteContra(string tipo)
+    public static List<string> GetResistenteContra(string tipo)
     {
         return diccResistenteContra[tipo];
     }
-    public List<string> GetInmuneContra(string tipo)
+    public static List<string> GetInmuneContra(string tipo)
     {
         return diccInmuneContra[tipo];
     }

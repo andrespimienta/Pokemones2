@@ -9,13 +9,10 @@ public class Pokemon
     private double vida;
     private double vidaMax;
     private double velocidadAtaque;
-   
     private List<IAtaque> listadoAtaques;
-    private List<string> listaDeDebilidades;
-    private List<string> listaDeResistencia;
-    private List<string> listaDeInmudidades;
+
     
-    public string Status { get; set;}
+    public string EfectoActivo { get; set;}
     
     //Getters:
     public string GetNombre()
@@ -30,10 +27,6 @@ public class Pokemon
     {
         return this.vida;
     }
-    public void SetVida(double dañoEspecial)
-    {
-        this.vida = vida-dañoEspecial;
-    }
     public double GetVelocidadAtaque()
     {
         return this.velocidadAtaque;
@@ -43,8 +36,24 @@ public class Pokemon
         return this.listadoAtaques;
     }
     
+    //Constructor:
+    public Pokemon(string pokeNombre, string pokeTipo, double pokeVida, double pokeVelAtaque, List<IAtaque> ataques)
+    {
+        this.nombre = pokeNombre;
+        this.tipo = pokeTipo;
+        this.vida = pokeVida;
+        this.vidaMax = pokeVida;
+        this.velocidadAtaque = pokeVelAtaque;
+        this.listadoAtaques = ataques;
+        EfectoActivo = null;
+    }
     
-
+    // Métodos:
+    public void DañoPorTurno(double dañoEspecial)
+    {
+        this.vida = vida-dañoEspecial;
+    }
+    
     public string ListaDeAtaques()
     {  
         string resultado = "";
@@ -58,88 +67,43 @@ public class Pokemon
 
         return resultado.Trim(); // Elimina el último espacio extra al final de la cadena
     }
-   
-    //Constructor:
-    public Pokemon(string pokeNombre, string pokeTipo, double pokeVida, double pokeVelAtaque, List<IAtaque> ataques)
-    {
-        this.nombre = pokeNombre;
-        this.tipo = pokeTipo;
-        this.vida = pokeVida;
-        this.vidaMax = pokeVida;
-        this.velocidadAtaque = pokeVelAtaque;
-        this.listadoAtaques = ataques;
-        Status = null;
-    }
 
     public void RecibirDaño(IAtaque ataqueRecibido)
     {
-        if (listaDeInmudidades!=null && listaDeInmudidades.Contains(ataqueRecibido.GetTipo()))
+        DiccionarioTipos.GetInstancia();
+        List<string> listaDebilidades = DiccionarioTipos.GetDebilContra(this.tipo);
+        List<string> listaResistencias = DiccionarioTipos.GetResistenteContra(this.tipo);
+        List<string> listaInmunidades = DiccionarioTipos.GetInmuneContra(this.tipo);
+        
+        if (listaInmunidades.Contains(ataqueRecibido.GetTipo()))    // Si el tipo del ataque está en los tipos a los que es inmune, Daño x0
         {
-            //no hagas nada
+            this.vida -= ataqueRecibido.GetDaño() * 0;
         }
-        else if (listaDeDebilidades!=null && listaDeDebilidades.Contains(ataqueRecibido.GetTipo()))
+        else if (listaResistencias.Contains(ataqueRecibido.GetTipo()))  // Si el tipo del ataque está en los tipos a los que es resistente, Daño x0.5
         {
-            this.vida -= ataqueRecibido.GetDaño()*2;
+            this.vida -= ataqueRecibido.GetDaño() * 0.5;
         }
-        else
+        else if (listaDebilidades.Contains(ataqueRecibido.GetTipo()))   // Si el tipo del ataque está en los tipos a los que es débil, Daño x2
         {
-            if (listaDeResistencia != null && listaDeResistencia.Contains(ataqueRecibido.GetTipo()))
-            {
-                this.vida -= ataqueRecibido.GetDaño() * 0.5;
-            }
-            else // el tipo de ataque no pertenece a debilidad,resistencia ni inmunidad
-            {
+                this.vida -= ataqueRecibido.GetDaño() * 2;
+        }
+        else    // Si el tipo del ataque no pertenece a los tipos a los que es inmune, resistente, ni débil, Daño x1
+        {
                 this.vida -= ataqueRecibido.GetDaño();
-            }
         }
+        
 
         if (ataqueRecibido.GetEsEspecial() == true)
         {
-            if (ataqueRecibido.GetEfecto()=="Dormir")
+            string efectoAtaque = ataqueRecibido.GetEfecto();
+            if (EfectoActivo == null)
             {
-                if (Status == null)
-                {
-                    Status = "Dormido";
-                }
-                else
-                {
-                    Console.WriteLine($"El pokemon ya está {Status}");
-                }
+                    EfectoActivo = efectoAtaque.Substring(0,efectoAtaque.Length - 1) + "do";
+                    // Aclaración: "Dormi" + "do" | "Paraliza" + "do" | "Envenena" + "do" | "Quema" + "do"
             }
-
-            if (ataqueRecibido.GetEfecto() == "Paralizar")
+            else
             {
-                if (Status== null)
-                {
-                    Status = "Paralizado";
-                }
-                else
-                {
-                    Console.WriteLine($"El pokemon ya está {Status}");
-                }
-            }
-            
-            if (ataqueRecibido.GetEfecto() == "Envenenar")
-            { 
-                if (Status == null)
-                {
-                    Status = "Envenenado";                }
-                else
-                {
-                    Console.WriteLine($"El pokemon ya está {Status}");
-                }
-            }
-            
-            if (ataqueRecibido.GetEfecto() == "Quemar")
-            {
-                if (Status == null)
-                {
-                    Status = "Quemado";
-                }
-                else
-                {
-                    Console.WriteLine($"El pokemon ya está {Status}");
-                }
+                Console.WriteLine($"El pokemon ya está {EfectoActivo}");
             }
         }
     }

@@ -125,15 +125,15 @@ public class Fachada
         
         bool ataqueExitoso = true;
         
-        if (pokemonVictima.Status == "Envenenado")
+        if (pokemonVictima.EfectoActivo == "Envenenado")
         {
-                    pokemonVictima.SetVida(5);
+                    pokemonVictima.DañoPorTurno(5);
                     Console.WriteLine($"{pokemonVictima.GetNombre()} sufrirá más daño por estar envenenado, su vida es {entrenadorSinTurno.GetPokemonEnUso().GetVida()}");
         } //Si el Pokemon que recibe daño está envenenado
 
-        if (pokemonVictima.Status == "Quemado")
+        if (pokemonVictima.EfectoActivo == "Quemado")
         {
-            pokemonVictima.SetVida(10);
+            pokemonVictima.DañoPorTurno(10);
             Console.WriteLine($"{pokemonVictima.GetNombre()} sufrirá más daño por estar quemado, su vida es {entrenadorConTurno.GetPokemonEnUso().GetVida()}");
         } //Si el Pokemon que recibe daño está quemado
 
@@ -225,11 +225,11 @@ public class Fachada
         Console.WriteLine($"\n El turno es de {entrenadorConTurno.GetNombre()}, " +
                           $"El Pokémon usado es {entrenadorConTurno.GetPokemonEnUso().GetNombre()}, " +
                           $"vida = {(entrenadorConTurno.GetPokemonEnUso().GetVida() <= 0 ? "muerto" : entrenadorConTurno.GetPokemonEnUso().GetVida().ToString())}" +
-                          $"{(entrenadorConTurno.GetPokemonEnUso().GetVida() > 0 ? $", su estado = {(entrenadorConTurno.GetPokemonEnUso().Status ?? "consciente")}\n" : "")}\n" +
+                          $"{(entrenadorConTurno.GetPokemonEnUso().GetVida() > 0 ? $", su estado = {(entrenadorConTurno.GetPokemonEnUso().EfectoActivo ?? "consciente")}\n" : "")}\n" +
                           $"Tu oponente es {entrenadorSinTurno.GetNombre()}, " +
                           $"El Pokémon usado es {entrenadorSinTurno.GetPokemonEnUso().GetNombre()}, " +
                           $"vida = {(entrenadorSinTurno.GetPokemonEnUso().GetVida() <= 0 ? "muerto" : entrenadorSinTurno.GetPokemonEnUso().GetVida().ToString())}" +
-                          $"{(entrenadorSinTurno.GetPokemonEnUso().GetVida() > 0 ? $", su estado = {(entrenadorSinTurno.GetPokemonEnUso().Status ?? "consciente")}" : "")}\n");
+                          $"{(entrenadorSinTurno.GetPokemonEnUso().GetVida() > 0 ? $", su estado = {(entrenadorSinTurno.GetPokemonEnUso().EfectoActivo ?? "consciente")}" : "")}\n");
 
 
     }
