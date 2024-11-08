@@ -85,21 +85,21 @@ public static class LeerArchivo
                 string ataqueTipo = datos[5];
                 double ataqueDaño = double.Parse(datos[6]);
                 double ataquePrecision = double.Parse(datos[7]);
-                Ataque ataque1 = new Ataque(ataqueNombre, ataqueTipo, ataqueDaño, ataquePrecision);
+                AtaqueBasico ataque1 = new AtaqueBasico(ataqueNombre, ataqueTipo, ataqueDaño, ataquePrecision);
 
                 //Encuentra y crea el Ataque 2:
                 ataqueNombre = datos[8];
                 ataqueTipo = datos[9];
                 ataqueDaño = double.Parse(datos[10]);
                 ataquePrecision = double.Parse(datos[11]);
-                Ataque ataque2 = new Ataque(ataqueNombre, ataqueTipo, ataqueDaño, ataquePrecision);
+                AtaqueBasico ataque2 = new AtaqueBasico(ataqueNombre, ataqueTipo, ataqueDaño, ataquePrecision);
 
                 //Encuentra y crea el Ataque 3:
                 ataqueNombre = datos[12];
                 ataqueTipo = datos[13];
                 ataqueDaño = double.Parse(datos[14]);
                 ataquePrecision = double.Parse(datos[15]);
-                Ataque ataque3 = new Ataque(ataqueNombre, ataqueTipo, ataqueDaño, ataquePrecision);
+                AtaqueBasico ataque3 = new AtaqueBasico(ataqueNombre, ataqueTipo, ataqueDaño, ataquePrecision);
 
                 //Encuentra y crea el Ataque 4:
                 ataqueNombre = datos[16];

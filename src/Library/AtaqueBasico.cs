@@ -3,7 +3,7 @@ using System.ComponentModel.Design.Serialization;
 
 namespace Proyecto_Pokemones_I;
 
-public class Ataque:IAtaque
+public class AtaqueBasico:IAtaque
 {
     // Atributos:
     private string nombre;
@@ -40,7 +40,7 @@ public class Ataque:IAtaque
     }
 
     // Constructor:
-    public Ataque(string nombreAtaque, string tipoAtaque, double dañoAtaque, double precisionAtaque)
+    public AtaqueBasico(string nombreAtaque, string tipoAtaque, double dañoAtaque, double precisionAtaque)
     {
         this.nombre = nombreAtaque;
         this.tipo = tipoAtaque;
