@@ -6,13 +6,13 @@ public static class LeerArchivo
 {
     public static void ImprimirCatalogoProcesado()
     {
-        string[] lineas = File.ReadAllLines("C:\\Repositorios\\Pokemones2\\src\\Program\\CatalogoPokemones.txt");
+        string[] lineas = File.ReadAllLines("C:\\Users\\Estudiante UCU\\Documents\\Repositorios Prog. II\\Pokemones2\\src\\Program\\CatalogoPokemones.txt");
         for (int indice = 2; indice < lineas.Length; indice++)
         {
             string[] datos = lineas[indice].Split(',');
             Console.WriteLine("======================================================================" +
-                              $"\nNombre: {datos[0]}, Tipo: {datos[1]}, Vida: {datos[2]}" +
-                              $"\nVelocidad de Ataque: {datos[3]}, Probabilidad de Crítico: {datos[4]}\n");
+                              $"\nNombre: {datos[0]}, Tipo: {datos[1]}," +
+                              $"\nVida: {datos[2]}, Velocidad de Ataque: {datos[3]}");
         }
 
         Console.WriteLine("======================================================================");
@@ -53,7 +53,7 @@ public static class LeerArchivo
         nombrePokemon = nombrePokemon.ToUpper(); // Evito errores por mayúsculas o minúsculas en el parámetro
 
         // Lee todas las líneas del archivo hasta encontrar la línea que contenga al Pokemon indicado:
-        string[] lineas = File.ReadAllLines("C:\\Repositorios\\Pokemones2\\src\\Program\\CatalogoPokemones.txt");
+        string[] lineas = File.ReadAllLines("C:\\Users\\Estudiante UCU\\Documents\\Repositorios Prog. II\\Pokemones2\\src\\Program\\CatalogoPokemones.txt");
         int indice = -1;
         for (int i = 0; i < lineas.Length; i++)
         {
@@ -116,13 +116,13 @@ public static class LeerArchivo
                 pokeAtaques.Add(ataque3);
                 pokeAtaques.Add(ataque4);
 
-                string path1 = @"C:\Repositorios\Pokemones2\src\Program\Debilidades.txt";
+                /*string path1 = @"C:\Repositorios\Pokemones2\src\Program\Debilidades.txt";
                 string path2 = @"C:\Repositorios\Pokemones2\src\Program\Resistencias.txt";
                 string path3 = @"C:\Repositorios\Pokemones2\src\Program\Inmunudidades.txt";
 
                 List<string> debilidades = Encontrar(pokeTipo, path1);
                 List<string> resistencias = Encontrar(pokeTipo, path2);
-                List<string> inmunidades = Encontrar(pokeTipo, path3);
+                List<string> inmunidades = Encontrar(pokeTipo, path3);*/
 
 
                 //Instancia al Pokemon y lo devuelve:

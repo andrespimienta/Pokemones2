@@ -144,7 +144,7 @@ public class Fachada
             if (ataque.GetNombre() == nombreAtaque)
             { 
                 double aux = pokemonVictima.GetVida(); 
-                if (ataque.GetEsPreciso() == false)
+               /* if (ataque.GetEsPreciso() == false)
                 {
                     Console.WriteLine("El ataque no impactó");
                 } //Si el ataque es preciso sigue el curso del ataque, sino tira mensaje de que no impactó
@@ -156,7 +156,7 @@ public class Fachada
                         pokemonVictima.SetVida(ataque.GetDaño()*0.20);
                         Console.WriteLine("¡El Ataque será Critico!");
                     } 
-                    //Si el ataque es critico sigue el curso del ataque, sino tira mensaje de que no impactó
+                    //Si el ataque es critico sigue el curso del ataque, sino tira mensaje de que no impactó */
                     if (aux > pokemonVictima.GetVida())
                     {
                         if (pokemonVictima.GetVida() <= 0)
@@ -178,7 +178,7 @@ public class Fachada
 
                 break; // que se salga del foreach porque ya lo encontro  
             }
-        }
+       // }
 
         return ataqueExitoso;  
     }
