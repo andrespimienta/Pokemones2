@@ -16,7 +16,7 @@ public class CuraTotal:IItems
 
     public void ActivarItem(Pokemon pokemon)
     {
-        pokemon.Status = null;
+        pokemon.EfectoActivo = null;
     }
     
 }

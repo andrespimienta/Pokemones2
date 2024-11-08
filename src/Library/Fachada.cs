@@ -106,16 +106,15 @@ public class Fachada
 
     public string ListaAtaques()
     {
-        return this.entrenadorConTurno.GetPokemonEnUso().ListaDeAtaques();
-    }
-
-    public bool EsAtaqueValido(string ataque)
-    {
-        // Obtener la lista de ataques del Pokémon en uso
-        List<IAtaque> ataques=entrenadorConTurno.GetPokemonEnUso().GetAtaques();
-
-        // Verificar si algún ataque en la lista tiene el mismo nombre que el ataque pasado como parámetro
-        return ataques.Any(a => a.GetNombre().Equals(ataque, StringComparison.OrdinalIgnoreCase));
+        string resultado = "";
+        
+        foreach (IAtaque ataque in this.entrenadorConTurno.GetPokemonEnUso().GetAtaques())
+        {
+            string palabraAux = ataque.GetNombre();
+            Console.Write(palabraAux + " / "); // Imprime cada nombre seguido de un espacio
+            resultado += palabraAux + " ";   // Agrega cada nombre a la cadena `resultado` seguido de un espacio
+        }
+        return resultado.Trim(); // Elimina el último espacio extra al final de la cadena
     }
 
     public bool Atacar(string nombreAtaque)
@@ -125,61 +124,54 @@ public class Fachada
         
         bool ataqueExitoso = true;
         
-        if (pokemonVictima.Status == "Envenenado")
+        /*--------------------------------------------------------------------------------------------------------------
+         ESTO NO VA ACÁ, ES DAÑO POR TURNO, DECIDA ATACAR, GUARDAR O USAR ITEM. SE APLICA CADA VEZ QUE ES MI TURNO
+         ---------------------------------------------------------------------------------------------------------------
+         if (pokemonVictima.EfectoActivo == "Envenenado")
         {
-                    pokemonVictima.SetVida(5);
-                    Console.WriteLine($"{pokemonVictima.GetNombre()} sufrirá más daño por estar envenenado, su vida es {entrenadorSinTurno.GetPokemonEnUso().GetVida()}");
+            pokemonVictima.DañoPorTurno(5);
+            Console.WriteLine($"{pokemonVictima.GetNombre()} sufrirá más daño por estar envenenado, su vida es {entrenadorSinTurno.GetPokemonEnUso().GetVida()}");
         } //Si el Pokemon que recibe daño está envenenado
 
-        if (pokemonVictima.Status == "Quemado")
+        if (pokemonVictima.EfectoActivo == "Quemado")
         {
-            pokemonVictima.SetVida(10);
+            pokemonVictima.DañoPorTurno(10);
             Console.WriteLine($"{pokemonVictima.GetNombre()} sufrirá más daño por estar quemado, su vida es {entrenadorConTurno.GetPokemonEnUso().GetVida()}");
         } //Si el Pokemon que recibe daño está quemado
-
+        ----------------------------------------------------------------------------------------------------------------
+        */
+        
         // Si es el turno del Jugador 1, intentará efectuar el ataque indicado sobre el Pokemon en Uso del Jugador 2
         foreach (IAtaque ataque in pokemonAtacante.GetAtaques())
         {
             // Si encontró el ataque especificado en la lista de ataques del Pokemon en uso del jugador, ataca al pokemon en uso del rival
             if (ataque.GetNombre() == nombreAtaque)
             { 
-                double aux = pokemonVictima.GetVida(); 
-                if (ataque.GetEsPreciso() == false)
-                {
-                    Console.WriteLine("El ataque no impactó");
-                } //Si el ataque es preciso sigue el curso del ataque, sino tira mensaje de que no impactó
-                else
-                {
-                    pokemonVictima.RecibirDaño(ataque);
-                    if (ataque.GetEsCritico() == true && ataque.GetEsEspecial()==true) 
-                    {
-                        pokemonVictima.SetVida(ataque.GetDaño()*0.20);
-                        Console.WriteLine("¡El Ataque será Critico!");
-                    } 
-                    //Si el ataque es critico sigue el curso del ataque, sino tira mensaje de que no impactó
-                    if (aux > pokemonVictima.GetVida())
+                double vidaPrevia = pokemonVictima.GetVida();
+                pokemonVictima.RecibirDaño(ataque);
+                    if (vidaPrevia > pokemonVictima.GetVida())
                     {
                         if (pokemonVictima.GetVida() <= 0)
                         {
                             Console.WriteLine($"{pokemonVictima.GetNombre()} ha sido vencido");
-
                         }
                         else
                         {
                             Console.WriteLine(
-                                $"{pokemonVictima.GetNombre()} ha sufrido daño, su vida es {entrenadorSinTurno.GetPokemonEnUso().GetVida()}");
+                                $"{pokemonVictima.GetNombre()} ha sufrido daño, su vida es {pokemonVictima.GetVida()}");
                         }
                     }
                     else
                     {
-                        Console.WriteLine($"{pokemonVictima.GetNombre()} salio ileso de ese ataque");
+                        Console.WriteLine($"{pokemonVictima.GetNombre()} salió ileso de ese ataque");
                     }
-                }
-
-                break; // que se salga del foreach porque ya lo encontro  
+                return ataqueExitoso;
             }
         }
-
+        
+        // Si sale del Foreach sin haber retornado antes, es que no encontró el ataque
+        Console.WriteLine("No se encontró el ataque");
+        ataqueExitoso = false;
         return ataqueExitoso;  
     }
     
@@ -225,11 +217,11 @@ public class Fachada
         Console.WriteLine($"\n El turno es de {entrenadorConTurno.GetNombre()}, " +
                           $"El Pokémon usado es {entrenadorConTurno.GetPokemonEnUso().GetNombre()}, " +
                           $"vida = {(entrenadorConTurno.GetPokemonEnUso().GetVida() <= 0 ? "muerto" : entrenadorConTurno.GetPokemonEnUso().GetVida().ToString())}" +
-                          $"{(entrenadorConTurno.GetPokemonEnUso().GetVida() > 0 ? $", su estado = {(entrenadorConTurno.GetPokemonEnUso().Status ?? "consciente")}\n" : "")}\n" +
+                          $"{(entrenadorConTurno.GetPokemonEnUso().GetVida() > 0 ? $", su estado = {(entrenadorConTurno.GetPokemonEnUso().EfectoActivo ?? "consciente")}\n" : "")}\n" +
                           $"Tu oponente es {entrenadorSinTurno.GetNombre()}, " +
                           $"El Pokémon usado es {entrenadorSinTurno.GetPokemonEnUso().GetNombre()}, " +
                           $"vida = {(entrenadorSinTurno.GetPokemonEnUso().GetVida() <= 0 ? "muerto" : entrenadorSinTurno.GetPokemonEnUso().GetVida().ToString())}" +
-                          $"{(entrenadorSinTurno.GetPokemonEnUso().GetVida() > 0 ? $", su estado = {(entrenadorSinTurno.GetPokemonEnUso().Status ?? "consciente")}" : "")}\n");
+                          $"{(entrenadorSinTurno.GetPokemonEnUso().GetVida() > 0 ? $", su estado = {(entrenadorSinTurno.GetPokemonEnUso().EfectoActivo ?? "consciente")}" : "")}\n");
 
 
     }

@@ -2,15 +2,15 @@ namespace Proyecto_Pokemones_I;
 
 public class AtaqueEspecial:IAtaque
 {
+    // Atributos:
     private string nombre;
     private string tipo;
     private double daño;
-    private bool especial;
-    private double precision;
-    private double probCritico;
-    private string dañoEspecial;
+    private int precision;
+    private string efectoNegativo;
+    private bool esEspecial;
 
-    //Getters:
+    // Getters:
     public string GetNombre()
     {
         return this.nombre;
@@ -23,22 +23,17 @@ public class AtaqueEspecial:IAtaque
     {
         return this.daño;
     }
-    public bool GetEsEspecial()
-    {
-        return this.especial;
-    }
-    public double GetPrecision()
+    public int GetPrecision()
     {
         return this.precision;
     }
-
-    public double GetCritico()
+    public string GetEfecto()
     {
-        return this.probCritico;
+        return this.efectoNegativo;
     }
-    public string GetDañoEspecial()
+    public bool GetEsEspecial()
     {
-        return this.dañoEspecial;
+        return this.esEspecial;
     }
 
     public bool GetEsCritico()
@@ -65,20 +60,16 @@ public class AtaqueEspecial:IAtaque
         return preciso[indiceAleatorio];
     }//Devuelve si el preciso se da
 
-
-    List<string> dañosEspeciales = new List<string> { "Dormir", "Paralizar", "Envenenar", "Quemar" };
+    
     
     //Constructor:
-    public AtaqueEspecial(string nombreAtaque, string tipoAtaque, double dañoAtaque, bool esEspecial)
+    public AtaqueEspecial(string nombreAtaque, string tipoAtaque, double dañoAtaque, int precisionAtaque, string efecto)
     {
         this.nombre = nombreAtaque;
         this.tipo = tipoAtaque;
         this.daño = dañoAtaque;
-        this.especial = esEspecial;
-        this.precision = 0.5;
-        this.probCritico = 0.1;
-        Random rand = new Random();
-        int indiceAleatorio = rand.Next(dañosEspeciales.Count);
-        this.dañoEspecial = dañosEspeciales[indiceAleatorio];
+        this.precision = precisionAtaque;
+        this.efectoNegativo = efecto;
+        this.esEspecial = true;
     }
 }

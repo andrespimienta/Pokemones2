@@ -9,13 +9,8 @@ public class Pokemon
     private double vida;
     private double vidaMax;
     private double velocidadAtaque;
-    private double probabilidadCritico;
     private List<IAtaque> listadoAtaques;
-    private List<string> listaDeDebilidades;
-    private List<string> listaDeResistencia;
-    private List<string> listaDeInmudidades;
-    
-    public string Status { get; set;}
+    public string EfectoActivo { get; set;}
     
     //Getters:
     public string GetNombre()
@@ -30,126 +25,91 @@ public class Pokemon
     {
         return this.vida;
     }
-    
-    public void SetVida(double dañoEspecial)
-    {
-        this.vida = vida-dañoEspecial;
-    }
     public double GetVelocidadAtaque()
     {
         return this.velocidadAtaque;
-    }
-    public double GetProbabilidadCritico()
-    {
-        return this.probabilidadCritico;
     }
     public List<IAtaque> GetAtaques()
     {
         return this.listadoAtaques;
     }
     
-    
-
-    public string ListaDeAtaques()
-    {  
-        string resultado = "";
-        
-        foreach (IAtaque ataque in listadoAtaques)
-        {
-            string aux=ataque.GetNombre();
-            Console.Write(aux + " / "); // Imprime cada nombre seguido de un espacio
-            resultado += aux + " ";   // Agrega cada nombre a la cadena `resultado` seguido de un espacio
-        }
-
-        return resultado.Trim(); // Elimina el último espacio extra al final de la cadena
-    }
-   
     //Constructor:
-    public Pokemon(string pokeNombre, string pokeTipo, double pokeVida, double pokeVelAtaque, double pokeProbCrit, List<IAtaque> ataques,List<string> debilidades,List<string> resistencias, List<string> inmuidades)
+    public Pokemon(string pokeNombre, string pokeTipo, double pokeVida, double pokeVelAtaque, List<IAtaque> ataques)
     {
         this.nombre = pokeNombre;
         this.tipo = pokeTipo;
         this.vida = pokeVida;
         this.vidaMax = pokeVida;
         this.velocidadAtaque = pokeVelAtaque;
-        this.probabilidadCritico = pokeProbCrit;
         this.listadoAtaques = ataques;
-        Status = null;
-        listaDeDebilidades = debilidades;
-        listaDeResistencia = resistencias;
-        listaDeInmudidades = inmuidades;
+        EfectoActivo = null;
     }
-
+    
+    // Métodos:
+    public void DañoPorTurno(double dañoEspecial)
+    {
+        this.vida = vida-dañoEspecial;
+    }
+    
     public void RecibirDaño(IAtaque ataqueRecibido)
     {
-        if (listaDeInmudidades!=null && listaDeInmudidades.Contains(ataqueRecibido.GetTipo()))
+        DiccionarioTipos.GetInstancia();
+        List<string> listaDebilidades = DiccionarioTipos.GetDebilContra(this.tipo);
+        List<string> listaResistencias = DiccionarioTipos.GetResistenteContra(this.tipo);
+        List<string> listaInmunidades = DiccionarioTipos.GetInmuneContra(this.tipo);
+        double dañoTotal = 0;
+
+        // Si el ataque fue preciso (resultado aplicar el Probabilometro a la Precision), calculará el daño:
+        if (ProbabilityUtils.Probabilometro(ataqueRecibido.GetPrecision()))   
         {
-            //no hagas nada
+            if (listaInmunidades.Contains(ataqueRecibido.GetTipo()))    // Si el tipo del ataque está en los tipos a los que es inmune, Daño x0
+            {
+                dañoTotal = ataqueRecibido.GetDaño() * 0;
+            }
+            else if (listaResistencias.Contains(ataqueRecibido.GetTipo()))  // Si el tipo del ataque está en los tipos a los que es resistente, Daño x0.5
+            {
+                dañoTotal = ataqueRecibido.GetDaño() * 0.5;
+            }
+            else if (listaDebilidades.Contains(ataqueRecibido.GetTipo()))   // Si el tipo del ataque está en los tipos a los que es débil, Daño x2
+            {
+                dañoTotal = ataqueRecibido.GetDaño() * 2;
+            }
+            else    // Si el tipo del ataque no pertenece a los tipos a los que es inmune, resistente, ni débil, Daño x1
+            {
+                dañoTotal = ataqueRecibido.GetDaño();
+            }
+            
+            
+            // Si fue preciso y además crítico (aplica Probabilomtero al 10% de chance), agrega un 20% extra de daño:
+            if (ProbabilityUtils.Probabilometro(10))
+            {
+                dañoTotal = dañoTotal * 1.20;
+                Console.WriteLine($"¡El ataque fue crítico, {this.nombre} recibió daño extra!");
+            }
+            this.vida -= dañoTotal; // Cuando se calculó finalmente el daño, se lo resta a la vida
+            
+
+            // Si fue preciso y además era un ataque Especial, intentará aplicarle el efecto:
+            if (ataqueRecibido.GetEsEspecial() == true)
+            {
+                string efectoAtaque = ataqueRecibido.GetEfecto();
+                if (EfectoActivo == null)
+                {
+                    EfectoActivo = efectoAtaque.Substring(0,efectoAtaque.Length - 1) + "DO";
+                    // Aclaración: "Dormi" + "do" | "Paraliza" + "do" | "Envenena" + "do" | "Quema" + "do"
+                    Console.WriteLine($"{this.nombre} ahora está {EfectoActivo}");
+                }
+                else
+                {
+                    Console.WriteLine($"El pokemon ya está {EfectoActivo}");
+                }
+            }
         }
-        else if (listaDeDebilidades!=null && listaDeDebilidades.Contains(ataqueRecibido.GetTipo()))
-        {
-            this.vida -= ataqueRecibido.GetDaño()*2;
-        }
+        // Si el ataque no fue preciso, no hace nada (no resta vida ni provoca efecto, lo erra)
         else
         {
-            if (listaDeResistencia != null && listaDeResistencia.Contains(ataqueRecibido.GetTipo()))
-            {
-                this.vida -= ataqueRecibido.GetDaño() * 0.5;
-            }
-            else // el tipo de ataque no pertenece a debilidad,resistencia ni inmunidad
-            {
-                this.vida -= ataqueRecibido.GetDaño();
-            }
-        }
-
-        if (ataqueRecibido.GetEsEspecial() == true)
-        {
-            if (ataqueRecibido.GetDañoEspecial()=="Dormir")
-            {
-                if (Status == null)
-                {
-                    Status = "Dormido";
-                }
-                else
-                {
-                    Console.WriteLine($"El pokemon ya está {Status}");
-                }
-            }
-
-            if (ataqueRecibido.GetDañoEspecial() == "Paralizar")
-            {
-                if (Status== null)
-                {
-                    Status = "Paralizado";
-                }
-                else
-                {
-                    Console.WriteLine($"El pokemon ya está {Status}");
-                }
-            }
-            
-            if (ataqueRecibido.GetDañoEspecial() == "Envenenar")
-            { 
-                if (Status == null)
-                {
-                    Status = "Envenenado";                }
-                else
-                {
-                    Console.WriteLine($"El pokemon ya está {Status}");
-                }
-            }
-            
-            if (ataqueRecibido.GetDañoEspecial() == "Quemar")
-            {
-                if (Status == null)
-                {
-                    Status = "Quemado";
-                }
-                else
-                {
-                    Console.WriteLine($"El pokemon ya está {Status}");
-                }
-            }
+            Console.WriteLine($"¡El ataque fue impreciso, no impactó!");
         }
     }
 
