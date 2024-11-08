@@ -2,13 +2,14 @@ namespace Proyecto_Pokemones_I;
 
 public class AtaqueEspecial:IAtaque
 {
+    // Atributos:
     private string nombre;
     private string tipo;
     private double daño;
     private double precision;
-    private string dañoEspecial;
+    private string efectoNegativo;
 
-    //Getters:
+    // Getters:
     public string GetNombre()
     {
         return this.nombre;
@@ -21,22 +22,13 @@ public class AtaqueEspecial:IAtaque
     {
         return this.daño;
     }
-    public bool GetEsEspecial()
-    {
-        return this.especial;
-    }
     public double GetPrecision()
     {
         return this.precision;
     }
-
-    public double GetCritico()
+    public string GetEfecto()
     {
-        return this.probCritico;
-    }
-    public string GetDañoEspecial()
-    {
-        return this.dañoEspecial;
+        return this.efectoNegativo;
     }
 
     public bool GetEsCritico()
@@ -63,20 +55,15 @@ public class AtaqueEspecial:IAtaque
         return preciso[indiceAleatorio];
     }//Devuelve si el preciso se da
 
-
-    List<string> dañosEspeciales = new List<string> { "Dormir", "Paralizar", "Envenenar", "Quemar" };
+    
     
     //Constructor:
-    public AtaqueEspecial(string nombreAtaque, string tipoAtaque, double dañoAtaque, bool esEspecial)
+    public AtaqueEspecial(string nombreAtaque, string tipoAtaque, double dañoAtaque, double precisionAtaque, string efecto)
     {
         this.nombre = nombreAtaque;
         this.tipo = tipoAtaque;
         this.daño = dañoAtaque;
-        this.especial = esEspecial;
-        this.precision = 0.5;
-        this.probCritico = 0.1;
-        Random rand = new Random();
-        int indiceAleatorio = rand.Next(dañosEspeciales.Count);
-        this.dañoEspecial = dañosEspeciales[indiceAleatorio];
+        this.precision = precisionAtaque;
+        this.efectoNegativo = efecto;
     }
 }

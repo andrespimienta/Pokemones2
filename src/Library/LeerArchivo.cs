@@ -61,7 +61,7 @@ public static class LeerArchivo
             if (lineas[i].Contains(nombrePokemon, StringComparison.OrdinalIgnoreCase))
             {
                 string[] datos = lineas[i].Split(',');
-                if (datos[0] == nombrePokemon) // Encontro la palabra pero puede que no sea el pokemon
+                if (datos[0] == nombrePokemon) // Encontro la palabra, pero puede que no sea el pokemon
                 {
                     indice = i; // Guarda el índice de la línea donde se encontró el Pokémon
                     break; // Salir del bucle si se encuentra el Pokémon

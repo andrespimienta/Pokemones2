@@ -1,4 +1,4 @@
-[nombre],[tipo],[vida],[velocidadAtaque],[probabilidadCritico],[nombreAtaque1],[tipoAtac1],[dañoAtac1],[nombreAtaque2],[tipoAtac2],[dañoAtac2],[nombreAtaque3],[tipoAtac3],[dañoAtac3],[nombreAtaque4],[tipoAtac4],[dañoAtac4]
+[nombre],[tipo],[vida],[velocidadAtaque],[nombreAtk1],[tipoAtk1],[dañoAtk1],[precisionAtk1],[nombreAtk2],[tipoAtk2],[dañoAtk2],[precisionAtk2],[nombreAtk3],[tipoAtk3],[dañoAtk3],[precisionAtk3],[nombreAtk4],[tipoAtk4],[dañoAtk4],[precisionAtk4],[efectoAtk4]
 
 PIKACHU,ELECTRICO,100,55,0.10,RAYO,ELECTRICO,50,IMPACTRUENO,ELECTRICO,40,COLA DE HIERRO,ACERO,35,ATAQUE RÁPIDO,NORMAL,30
 CHARMANDER,FUEGO,80,60,0.12,LANZALLAMAS,FUEGO,60,GARRA DRAGÓN,DRAGÓN,50,ASCUAS,FUEGO,30,COLMILLO ÍGNEO,FUEGO,40

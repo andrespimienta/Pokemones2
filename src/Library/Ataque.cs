@@ -4,7 +4,7 @@ namespace Proyecto_Pokemones_I;
 
 public class Ataque:IAtaque
 {
-    // Atributos
+    // Atributos:
     private string nombre;
     private string tipo;
     private double daño;
