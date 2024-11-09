@@ -8,16 +8,9 @@ public class Program
     static void Main()
     {
         DiccionarioTipos.GetInstancia();    // Instancia el Singleton y define el contenido de todos sus diccionarios
+        Fachada fachada = Fachada.GetInstancia();
+        fachada.ListaDeEspera();
         
-        Console.WriteLine("Ingrese su nombre, jugador 1: ");
-        string nombreJugador = Console.ReadLine();
-        Entrenador jugador1 = new Entrenador(nombreJugador);
-        
-        Console.WriteLine("Ingrese su nombre, jugador 2: ");
-        nombreJugador = Console.ReadLine();
-        Entrenador jugador2 = new Entrenador(nombreJugador);
-        
-        Fachada fachada = new Fachada(jugador1, jugador2);
         Console.WriteLine("======================================================================" +
                           "\nEstos son los pokemones disponibles:");
         fachada.MostrarCatalogo();
@@ -74,6 +67,7 @@ public class Program
                                           // de lo contrario muestra el menu principal de nuevo 
             do
             {
+                
                 if (entrenadorConTurno.GetPokemonEnUso().GetVida() > 0)
                 {
                     Console.WriteLine("Elija una acción: ");
@@ -98,14 +92,22 @@ public class Program
                         string respuestaUsuario;
                         do
                         {
+                            seleccionExitosa = false; // cheque si se eligio un ataque con exito
                             Console.WriteLine("Elija un ataque: ");
                             fachada.ListaAtaques(); // Muestra los ataques disponibles
                             Console.WriteLine("[BACK]");
                             respuestaUsuario = Console.ReadLine().ToUpper();
-                            seleccionExitosa = fachada.Atacar(respuestaUsuario); // Intenta realizar el ataque con lo que recibio del usuario
-                            operacionExitosa = true; // se concretó el ataque
+                            if (respuestaUsuario != "BACK")// para que no busque en la lista de atauqes
+                            {
+                                seleccionExitosa = fachada.Atacar(respuestaUsuario); // Intenta realizar el ataque con lo que recibio del usuario
+                            }
+                        } while (!seleccionExitosa && respuestaUsuario!="BACK");// se sale por ataque exitoso o por BACK
 
-                        } while (!seleccionExitosa && respuestaUsuario!="BACK");
+                        if (respuestaUsuario != "BACK")// Si fue ataque exitoso se termina el turno
+                                                        //sino vuelve a desplegar menu principal
+                        {
+                            operacionExitosa = true; // se concretó el ataque
+                        }
                     }
                     else
                     {

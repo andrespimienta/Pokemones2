@@ -6,7 +6,7 @@ public static class LeerArchivo
 {
     public static void ImprimirCatalogoProcesado()
     {
-        string[] lineas = File.ReadAllLines("/Users/andrespimienta/Desktop/Facultad/Programación 2/Proyecto/Pokemones2/src/Program/CatalogoPokemones.txt");
+        string[] lineas = File.ReadAllLines("C:\\Repositorios\\Pokemones2\\src\\Program\\CatalogoPokemones.txt");
         for (int indice = 2; indice < lineas.Length; indice++)
         {
             string[] datos = lineas[indice].Split(',');
@@ -23,7 +23,7 @@ public static class LeerArchivo
         nombrePokemon = nombrePokemon.ToUpper(); // Evito errores por mayúsculas o minúsculas en el parámetro
 
         // Lee todas las líneas del archivo hasta encontrar la línea que contenga al Pokemon indicado:
-        string[] lineas = File.ReadAllLines("/Users/andrespimienta/Desktop/Facultad/Programación 2/Proyecto/Pokemones2/src/Program/CatalogoPokemones.txt");
+        string[] lineas = File.ReadAllLines("C:\\Repositorios\\Pokemones2\\src\\Program\\CatalogoPokemones.txt");
         int indice = -1;
         for (int i = 0; i < lineas.Length; i++)
         {
