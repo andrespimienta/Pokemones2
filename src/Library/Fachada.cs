@@ -4,12 +4,12 @@ namespace Proyecto_Pokemones_I;
 
 public class Fachada
 {
-    private List<Entrenador> jugadores=new List<Entrenador>();
-    private Entrenador entrenadorConTurno;
-    private Entrenador entrenadorSinTurno;
+    public List<Entrenador> Jugadores { get; private set; }
+    public Entrenador entrenadorConTurno;
+    public Entrenador entrenadorSinTurno;
     public bool existeGanador = false;
     private static Fachada instancia;
-    private bool _estaInicializada = false;
+   
     
 
     //Getters:
@@ -23,13 +23,17 @@ public class Fachada
     }
 
     // Constructor:
-    private Fachada() { }
+    private Fachada()
+    {
+        Jugadores = new List<Entrenador>();
+    }
 
     public static Fachada GetInstancia()
     {
         if (instancia == null)
         {
             instancia = new Fachada();
+            
         }
 
         return instancia;
@@ -41,15 +45,15 @@ public class Fachada
 
     public void CambiarTurno()
     {
-        if (entrenadorConTurno == jugadores[0])
+        if (entrenadorConTurno == Jugadores[0])
         {
-            entrenadorConTurno = jugadores[1];
-            entrenadorSinTurno = jugadores[0];
+            entrenadorConTurno = Jugadores[1];
+            entrenadorSinTurno = Jugadores[0];
         }
-        else if (entrenadorConTurno == jugadores[1])
+        else if (entrenadorConTurno == Jugadores[1])
         {
-            entrenadorConTurno = jugadores[0];
-            entrenadorSinTurno = jugadores[1];
+            entrenadorConTurno = Jugadores[0];
+            entrenadorSinTurno = Jugadores[1];
         }
     }
 
@@ -180,6 +184,11 @@ public class Fachada
         return ataqueExitoso;  
     }
     
+    public void LimpiarListaDeJugadores()
+    {
+        Jugadores.Clear();  // Limpia todos los jugadores de la lista
+       
+    }
 
     public bool ChequeoPantallaFinal()
     {
@@ -230,57 +239,57 @@ public class Fachada
 
 
     }
+    public void AgregarJugador(string nombreJugador)
+    {
+        // Validar que el nombre no esté vacío
+        if (string.IsNullOrWhiteSpace(nombreJugador))
+        {
+            Console.WriteLine("El nombre no puede estar vacío. Por favor, inténtelo de nuevo.");
+            return;
+        }
+
+        // Crear un nuevo jugador y agregarlo a la lista
+        Entrenador jugador = new Entrenador(nombreJugador);
+        Jugadores.Add(jugador);
+
+        Console.WriteLine($"\n¡Bienvenido, {nombreJugador}! Has sido agregado a la lista de espera.");
+        Console.WriteLine($"Jugadores en la lista de espera: {Jugadores.Count}");
+    }
 
     public void ListaDeEspera()
-    {   
-        int cantidadDeJugadores = 0;
-
+    {
         Console.WriteLine("-------------- ¡BIENVENIDO A LA BATALLA POKÉMON! --------------");
         Console.WriteLine("Prepárate para una aventura épica, Entrenador.");
         Console.WriteLine("Ingresa tu nombre para unirte a la batalla.");
         Console.WriteLine("Necesitamos al menos 2 jugadores para empezar.");
         Console.WriteLine("-------------------------------------------------------------");
 
-        // Bucle para agregar jugadores a la lista de espera
-        do
+        // Bucle para agregar jugadores hasta tener al menos 2
+        while (Jugadores.Count < 2)
         {
             Console.WriteLine("\nIngrese su nombre: ");
             string nombreJugador = Console.ReadLine();
 
-            // Validar que el nombre no esté vacío
-            if (string.IsNullOrWhiteSpace(nombreJugador))
-            {
-                Console.WriteLine("El nombre no puede estar vacío. Por favor, inténtelo de nuevo.");
-                continue;
-            }
+            // Llamar al método para agregar jugador
+            AgregarJugador(nombreJugador);
 
-            // Crear un nuevo jugador y agregarlo a la lista
-            Entrenador jugador = new Entrenador(nombreJugador);
-            jugadores.Add(jugador);
-            cantidadDeJugadores++;
-
-            Console.WriteLine($"\n¡Bienvenido, {nombreJugador}! Has sido agregado a la lista de espera.");
-            Console.WriteLine($"Jugadores en la lista de espera: {cantidadDeJugadores}");
-
-            // Verificar si ya hay al menos 2 jugadores
-            if (cantidadDeJugadores < 2)
+            if (Jugadores.Count < 2)
             {
                 Console.WriteLine("\nEsperando más jugadores para iniciar la batalla...");
             }
+        }
 
-        } while (cantidadDeJugadores < 2);
-
-        // Asignar roles a los jugadores
-        entrenadorConTurno = jugadores[0];
-        entrenadorSinTurno = jugadores[1];
+        // Asignar roles a los jugadores una vez que haya suficientes
+        entrenadorConTurno = Jugadores[0];
+        entrenadorSinTurno = Jugadores[1];
 
         Console.WriteLine("\n¡Ya hay suficientes jugadores! La batalla está a punto de comenzar...");
         Console.WriteLine($"El entrenador {entrenadorConTurno.GetNombre()} tiene el primer turno.");
         Console.WriteLine($"El entrenador {entrenadorSinTurno.GetNombre()} esperará su turno.");
         Console.WriteLine("-------------------------------------------------------------");
     }
+}
 
 
     
 
-}

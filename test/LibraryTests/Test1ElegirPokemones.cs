@@ -45,74 +45,48 @@ public class Test1ElegirPokemones
     public void Elige6pokemonesProgram()
     {
         DiccionarioTipos.GetInstancia(); // Instancia el Singleton y define el contenido de todos sus diccionarios
+        Fachada fachada = Fachada.GetInstancia();
+        fachada.LimpiarListaDeJugadores();
+        
+        fachada.AgregarJugador("A");
+        fachada.AgregarJugador("B");
+        fachada.entrenadorConTurno = fachada.Jugadores[0];
+        
 
-        string nombreJugador = "A";
-        Entrenador jugador1 = new Entrenador(nombreJugador); //Se asigna nombre a jugador 1
-
-        nombreJugador = "B";
-        Entrenador jugador2 = new Entrenador(nombreJugador); //Se asigna nombre a jugador 2
-
-        Fachada fachada = new Fachada(jugador1, jugador2);
-        Console.WriteLine("======================================================================" +
-                       "\nEstos son los pokemones disponibles:"); //Se muestran los pokemones
-        fachada.MostrarCatalogo();
-        string input = "";
-        bool seleccionExitosa;
-
-        for (int j = 0; j <= 1; j++) // lo repite para los dos jugadores
+        for (int j = 0; j <= 1; j++)
         {
-            for (int i = 1; i <= 6; i++)
-            {
-                {
-                    Console.WriteLine($"{fachada.GetJugadorConTurno().GetNombre()}, seleccione su Pokemon número {i}:");
-                    if (i == 1)
-                    {
-                        input = "Pikachu";
-                    }
-                    if (i == 2)
-                    {
-                        input = "CHARMANDER";
-                    }
-                    if (i == 3)
-                    {
-                        input = "BULBASAUR";
-                    }
-                    if (i == 4)
-                    {
-                        input = "SQUIRTLE";
-                    }
-                    if (i == 5)
-                    {
-                        input = "EEVEE";
-                    }
-                    if (i == 6)
-                    {
-                        input = "JIGGLYPUFF";
-                    }
-                    seleccionExitosa = fachada.ElegirPokemon(input.ToUpper());
-                    Console.WriteLine($"{fachada.GetJugadorConTurno().GetNombre()}, su pokemon elegido es {input.ToUpper()}:");
-                }
-            }
-            Console.WriteLine("======================================================================" +
-                             $"\nHas completado tu selección, {fachada.GetJugadorConTurno().GetNombre()}\n" +
-                            "======================================================================");
+            // lo repite para los dos jugadores
+            fachada.ElegirPokemon("Pikachu");
+            fachada.ElegirPokemon("CHARMANDER");
+            fachada.ElegirPokemon("BULBASAUR");
+            fachada.ElegirPokemon("SQUIRTLE");
+            fachada.ElegirPokemon("EEVEE");
+            fachada.ElegirPokemon("JIGGLYPUFF");
             fachada.CambiarTurno();
         }
-        // Contar los Pokemones en la lista del entrenador
-        int contadorPokemonesProgram = 0;
-        foreach (var pokemones in jugador1.GetSeleccion())
+
+
+       
+        // Asegúrate de que hay exactamente 2 jugadores en la lista antes de contar
+        Assert.That(fachada.Jugadores.Count, Is.EqualTo(2));
+
+        // Contador para el primer jugador
+        int contadorPokemonesJugador1 = 0;
+        foreach (var pokemon in fachada.Jugadores[0].GetSeleccion())
         {
-            contadorPokemonesProgram++;
-        }
-        
-        int contadorPokemonesProgram2 = 0;
-        foreach (var pokemones in jugador1.GetSeleccion())
-        {
-            contadorPokemonesProgram2++;
+            contadorPokemonesJugador1++;
         }
 
-        // Retorna que debe haber 6 Pokémon en la selección del entrenador
-        Assert.That(contadorPokemonesProgram, Is.EqualTo(6));
-        Assert.That(contadorPokemonesProgram2, Is.EqualTo(6));
+        // Contador para el segundo jugador
+        int contadorPokemonesJugador2 = 0;
+        foreach (var pokemon in fachada.Jugadores[1].GetSeleccion())
+        {
+            contadorPokemonesJugador2++;
+        }
+
+        // Asegurar que ambos jugadores tengan exactamente 6 Pokémon
+        Assert.That(contadorPokemonesJugador1, Is.EqualTo(6), $"El jugador {fachada.Jugadores[0].GetNombre()} no tiene 6 Pokémon.");
+        Assert.That(contadorPokemonesJugador2, Is.EqualTo(6), $"El jugador {fachada.Jugadores[1].GetNombre()} no tiene 6 Pokémon.");
+
     }
 }
