@@ -20,6 +20,8 @@ public class TestUserStory3y5
         fachada.LimpiarListaDeJugadores();
     }
     [Test]
+    // "3. Como jugador, quiero ver la cantidad de vida (HP) de mis Pokémons y de los Pokémons oponentes para saber cuánta salud tienen."
+    // "5. Como jugador, quiero saber de quién es el turno para estar seguro de cuándo atacar o esperar."
     public void VerVidaDePokemonesProgram()
     {
         fachada.AgregarJugadorALista("1");

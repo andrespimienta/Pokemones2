@@ -7,6 +7,7 @@ namespace TestLibrary;
 public class TestUserStory2
 {
     [Test]
+    // "2. Como jugador, quiero ver los ataques disponibles de mis Pokémons para poder elegir cuál usar en cada turno."
     public void VerAtaquesDePokemonesProgram()
     {
         DiccionarioTipos.GetInstancia(); // Instancia el Singleton y define el contenido de todos sus diccionarios

@@ -6,6 +6,7 @@ namespace TestLibrary;
 public class TestUserStory1
 {
     [Test]
+    // "1. Como jugador, quiero elegir 6 Pokémons del catálogo disponible para comenzar la batalla"
     public void Elige6pokemones()
     {
         // Crear el entrenador
