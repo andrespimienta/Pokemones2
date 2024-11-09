@@ -22,8 +22,8 @@ public class Test3VerVidaOponentes
     [Test]
     public void VerVidaDePokemonesProgram()
     {
-        fachada.AgregarJugador("1");
-        fachada.AgregarJugador("2");
+        fachada.AgregarJugadorALista("1");
+        fachada.AgregarJugadorALista("2");
         fachada.entrenadorConTurno = fachada.Jugadores[0];
         
         

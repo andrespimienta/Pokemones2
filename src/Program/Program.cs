@@ -10,10 +10,8 @@ public class Program
         DiccionarioTipos.GetInstancia();    // Instancia el Singleton y define el contenido de todos sus diccionarios
         Fachada fachada = Fachada.GetInstancia();
         fachada.ListaDeEspera();
-        
-        Console.WriteLine("======================================================================" +
-                          "\nEstos son los pokemones disponibles:");
         fachada.MostrarCatalogo();
+        
         string input = "";
         bool seleccionExitosa;
         

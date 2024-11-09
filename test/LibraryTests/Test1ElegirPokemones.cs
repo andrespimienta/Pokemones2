@@ -48,8 +48,8 @@ public class Test1ElegirPokemones
         Fachada fachada = Fachada.GetInstancia();
         fachada.LimpiarListaDeJugadores();
         
-        fachada.AgregarJugador("A");
-        fachada.AgregarJugador("B");
+        fachada.AgregarJugadorALista("A");
+        fachada.AgregarJugadorALista("B");
         fachada.entrenadorConTurno = fachada.Jugadores[0];
         
 
