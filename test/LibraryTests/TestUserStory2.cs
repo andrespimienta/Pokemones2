@@ -4,7 +4,7 @@ using Proyecto_Pokemones_I;
 
 namespace TestLibrary;
 
-public class Test2VerAtaques
+public class TestUserStory2
 {
     [Test]
     public void VerAtaquesDePokemonesProgram()
@@ -21,7 +21,7 @@ public class Test2VerAtaques
         for (int j = 0; j <= 1; j++)
         {
             // lo repite para los dos jugadores
-            fachada.ElegirPokemon("Pikachu");
+            fachada.ElegirPokemon("PIKACHU");
             fachada.ElegirPokemon("CHARMANDER");
             fachada.ElegirPokemon("BULBASAUR");
             fachada.ElegirPokemon("SQUIRTLE");
@@ -46,9 +46,6 @@ public class Test2VerAtaques
 
         // Verificar que los ataques se muestren al jugador en el turno actual
         Assert.That(fachada.ListaAtaques(), Is.EqualTo("IMPACTRUENO RAYO PUÑO TRUENO ATAQUE RÁPIDO"));
-
-
-
-
+        
     }
 }

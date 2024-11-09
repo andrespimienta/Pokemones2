@@ -7,7 +7,7 @@ using System;
 using System.IO;
 using NUnit.Framework;
 
-public class Test3VerVidaOponentes
+public class TestUserStory3
 {
     private Fachada fachada;
 
@@ -54,7 +54,6 @@ public class Test3VerVidaOponentes
 
         string outputEsperadoOponente = "Tu oponente es 2, El Pokémon usado es PIKACHU, vida = 35, su estado = consciente";
         Assert.That(consoleOutput.ToString().Contains(outputEsperadoOponente));
-
-       
+        
     }
 }

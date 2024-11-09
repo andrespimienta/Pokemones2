@@ -3,7 +3,7 @@ using Proyecto_Pokemones_I;
 
 namespace TestLibrary;
 
-public class Test1ElegirPokemones
+public class TestUserStory1
 {
     [Test]
     public void Elige6pokemones()
@@ -52,7 +52,6 @@ public class Test1ElegirPokemones
         fachada.AgregarJugadorALista("B");
         fachada.entrenadorConTurno = fachada.Jugadores[0];
         
-
         for (int j = 0; j <= 1; j++)
         {
             // lo repite para los dos jugadores
@@ -64,9 +63,7 @@ public class Test1ElegirPokemones
             fachada.ElegirPokemon("JIGGLYPUFF");
             fachada.CambiarTurno();
         }
-
-
-       
+        
         // Asegúrate de que hay exactamente 2 jugadores en la lista antes de contar
         Assert.That(fachada.Jugadores.Count, Is.EqualTo(2));
 
@@ -87,6 +84,5 @@ public class Test1ElegirPokemones
         // Asegurar que ambos jugadores tengan exactamente 6 Pokémon
         Assert.That(contadorPokemonesJugador1, Is.EqualTo(6), $"El jugador {fachada.Jugadores[0].GetNombre()} no tiene 6 Pokémon.");
         Assert.That(contadorPokemonesJugador2, Is.EqualTo(6), $"El jugador {fachada.Jugadores[1].GetNombre()} no tiene 6 Pokémon.");
-
     }
 }
