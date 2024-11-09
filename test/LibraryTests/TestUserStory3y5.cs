@@ -7,7 +7,7 @@ using System;
 using System.IO;
 using NUnit.Framework;
 
-public class TestUserStory3
+public class TestUserStory3y5
 {
     private Fachada fachada;
 
@@ -49,10 +49,10 @@ public class TestUserStory3
         fachada.InformeDeSituacion();
 
         // Verificamos que la salida de la consola coincida con la vida de los Pokémon
-        string outputEsperadoTurno = "El turno es de 1, El Pokémon usado es PIKACHU, vida = 35, su estado = consciente";
+        string outputEsperadoTurno = "El turno es de 1, El Pokémon usado es PIKACHU, vida = 35/35, su estado = consciente";
         Assert.That(consoleOutput.ToString().Contains(outputEsperadoTurno));
 
-        string outputEsperadoOponente = "Tu oponente es 2, El Pokémon usado es PIKACHU, vida = 35, su estado = consciente";
+        string outputEsperadoOponente = "Tu oponente es 2, El Pokémon usado es PIKACHU, vida = 35/35, su estado = consciente";
         Assert.That(consoleOutput.ToString().Contains(outputEsperadoOponente));
         
     }

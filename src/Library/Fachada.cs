@@ -150,11 +150,11 @@ public class Fachada
     {
         Console.WriteLine($"\n El turno es de {entrenadorConTurno.GetNombre()}, " +
                           $"El Pokémon usado es {entrenadorConTurno.GetPokemonEnUso().GetNombre()}, " +
-                          $"vida = {(entrenadorConTurno.GetPokemonEnUso().GetVida() <= 0 ? "muerto" : entrenadorConTurno.GetPokemonEnUso().GetVida().ToString())}" +
+                          $"vida = {(entrenadorConTurno.GetPokemonEnUso().GetVida() <= 0 ? "muerto" : entrenadorConTurno.GetPokemonEnUso().GetVida().ToString())}/{entrenadorConTurno.GetPokemonEnUso().GetVidaMax()}" +
                           $"{(entrenadorConTurno.GetPokemonEnUso().GetVida() > 0 ? $", su estado = {(entrenadorConTurno.GetPokemonEnUso().EfectoActivo ?? "consciente")}\n" : "")}\n" +
                           $"Tu oponente es {entrenadorSinTurno.GetNombre()}, " +
                           $"El Pokémon usado es {entrenadorSinTurno.GetPokemonEnUso().GetNombre()}, " +
-                          $"vida = {(entrenadorSinTurno.GetPokemonEnUso().GetVida() <= 0 ? "muerto" : entrenadorSinTurno.GetPokemonEnUso().GetVida().ToString())}" +
+                          $"vida = {(entrenadorSinTurno.GetPokemonEnUso().GetVida() <= 0 ? "muerto" : entrenadorSinTurno.GetPokemonEnUso().GetVida().ToString())}/{entrenadorSinTurno.GetPokemonEnUso().GetVidaMax()}" +
                           $"{(entrenadorSinTurno.GetPokemonEnUso().GetVida() > 0 ? $", su estado = {(entrenadorSinTurno.GetPokemonEnUso().EfectoActivo ?? "consciente")}" : "")}\n");
 
 

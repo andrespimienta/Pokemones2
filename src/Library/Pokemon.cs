@@ -25,6 +25,10 @@ public class Pokemon
     {
         return this.vida;
     }
+    public double GetVidaMax()
+    {
+        return this.vidaMax;
+    }
     public double GetVelocidadAtaque()
     {
         return this.velocidadAtaque;
