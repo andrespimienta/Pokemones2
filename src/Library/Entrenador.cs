@@ -8,7 +8,7 @@ public class Entrenador
     private Pokemon? pokemonEnUso;
     private List<Pokemon> seleccionPokemones;
     private int pokemonesVivos;
-    private List<IItems> listItems;
+    private List<IItems> listItems; 
 
     //Getters:
     public string GetNombre()
