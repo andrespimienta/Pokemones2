@@ -10,6 +10,7 @@ public class Pokemon
     private double vidaMax;
     private double velocidadAtaque;
     private List<IAtaque> listadoAtaques;
+    public bool PuedeAtacar { get; set; }
     public string EfectoActivo { get; set;}
     
     //Getters:
