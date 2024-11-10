@@ -271,7 +271,7 @@ public class Fachada
         // Si el Jugador 2 no tiene más Pokemones vivos, gana el Jugador 1, imprime la pantalla y devuelve que hay un ganador
         else if (entrenadorConTurno.GetPokemonesVivos() == 0) 
         {
-            Console.WriteLine("----------------------------------------------------------------------\n" +
+            Console.WriteLine("-----------------------------------------------------------------------\n" +
                               $"\n¡Ha ganado {entrenadorSinTurno.GetNombre()}, felicidades! \n" +
                               "\nFin de la partida \n" + 
                               "----------------------------------------------------------------------");
