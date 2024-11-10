@@ -217,10 +217,6 @@ public class Fachada
                                 $"{pokemonVictima.GetNombre()} ha sufrido daño, su vida es {pokemonVictima.GetVida()}");
                         }
                     }
-                    else
-                    {
-                        Console.WriteLine($"{pokemonVictima.GetNombre()} salió ileso de ese ataque");
-                    }
                 return ataqueExitoso;
             }
         }
