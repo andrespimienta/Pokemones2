@@ -10,8 +10,8 @@ public class Pokemon
     private double vidaMax;
     private double velocidadAtaque;
     private List<IAtaque> listadoAtaques;
-    public string EfectoActivo { get; set;}
-    public int turnosDuracionEfecto;
+    public string EfectoActivo { get; private set;}
+    public int TurnosDuracionEfecto { get; private set; }
     
     //Getters:
     public string GetNombre()
@@ -38,7 +38,9 @@ public class Pokemon
     {
         return this.listadoAtaques;
     }
+
     
+
     //Constructor:
     public Pokemon(string pokeNombre, string pokeTipo, double pokeVida, double pokeVelAtaque, List<IAtaque> ataques)
     {
@@ -48,7 +50,8 @@ public class Pokemon
         this.vidaMax = pokeVida;
         this.velocidadAtaque = pokeVelAtaque;
         this.listadoAtaques = ataques;
-        EfectoActivo = null;
+        this.EfectoActivo = null;
+        this.TurnosDuracionEfecto = 0;
     }
     
     // Métodos:
@@ -107,6 +110,12 @@ public class Pokemon
                     EfectoActivo = efectoAtaque.Substring(0,efectoAtaque.Length - 1) + "DO";
                     // Aclaración: "Dormi" + "do" | "Paraliza" + "do" | "Envenena" + "do" | "Quema" + "do"
                     Console.WriteLine($"{this.nombre} ahora está {EfectoActivo}");
+                    
+                    // Si el efecto era Dormir, genera una duración de efecto de entre 1 y 4 turnos
+                    if (ataqueRecibido.GetEfecto() == "DORMIR")
+                    {
+                        this.TurnosDuracionEfecto = ProbabilityUtils.DuracionEfecto(1,4);
+                    }
                 }
                 else
                 {

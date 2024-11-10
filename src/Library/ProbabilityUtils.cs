@@ -18,4 +18,11 @@ public class ProbabilityUtils
             return false;
         }
     }
+
+    public static int DuracionEfecto(int turnosMin, int turnosMax)
+    {
+        Random generadorAleatorio = new Random();
+        int numeroAleatorio = generadorAleatorio.Next(turnosMin, turnosMax+1);
+        return numeroAleatorio;
+    }
 }
