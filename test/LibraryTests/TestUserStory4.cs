@@ -7,7 +7,7 @@ using System;
 using System.IO;
 using NUnit.Framework;
 
-public class TestUserStor4
+public class TestUserStory4
 {
     private Fachada fachada;
 
