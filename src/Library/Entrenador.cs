@@ -129,9 +129,9 @@ public class Entrenador
     
         if (item != null)
         {   item.DescribirItem();
-            Console.WriteLine("Desea usarlo: s/n");
-            string aux = Console.ReadLine();
-            aux = aux.ToUpper();// Evito errores por mayúsculas o minúsculas en el parámetro
+            //Console.WriteLine("Desea usarlo: s/n");
+            //string aux = Console.ReadLine();
+            string aux = "S"; //aux.ToUpper();// Evito errores por mayúsculas o minúsculas en el parámetro
             if (aux =="S")
             {
                 // eliminar el ítem de la lista después de usarlo
