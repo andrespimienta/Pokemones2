@@ -70,14 +70,17 @@ public class Pokemon
             if (listaInmunidades.Contains(ataqueRecibido.GetTipo()))    // Si el tipo del ataque está en los tipos a los que es inmune, Daño x0
             {
                 dañoTotal = ataqueRecibido.GetDaño() * 0;
+                Console.WriteLine($"{this.nombre} es inmune a los ataques de tipo {ataqueRecibido.GetTipo()}, no recibió daño");
             }
             else if (listaResistencias.Contains(ataqueRecibido.GetTipo()))  // Si el tipo del ataque está en los tipos a los que es resistente, Daño x0.5
             {
                 dañoTotal = ataqueRecibido.GetDaño() * 0.5;
+                Console.WriteLine($"{this.nombre} es resistente a los ataques de tipo {ataqueRecibido.GetTipo()}, recibió la mitad del daño");
             }
             else if (listaDebilidades.Contains(ataqueRecibido.GetTipo()))   // Si el tipo del ataque está en los tipos a los que es débil, Daño x2
             {
                 dañoTotal = ataqueRecibido.GetDaño() * 2;
+                Console.WriteLine($"{this.nombre} es débil a los ataques de tipo {ataqueRecibido.GetTipo()}, recibió el doble del daño");
             }
             else    // Si el tipo del ataque no pertenece a los tipos a los que es inmune, resistente, ni débil, Daño x1
             {
@@ -85,8 +88,8 @@ public class Pokemon
             }
             
             
-            // Si fue preciso y además crítico (aplica Probabilomtero al 10% de chance), agrega un 20% extra de daño:
-            if (ProbabilityUtils.Probabilometro(10))
+            // Si no es inmune al ataque, fue preciso y además crítico (aplica Probabilomtero al 10% de chance), agrega un 20% extra de daño:
+            if (ProbabilityUtils.Probabilometro(10) && !listaInmunidades.Contains(ataqueRecibido.GetTipo()))
             {
                 dañoTotal = dañoTotal * 1.20;
                 Console.WriteLine($"¡El ataque fue crítico, {this.nombre} recibió daño extra!");
@@ -94,8 +97,8 @@ public class Pokemon
             this.vida -= dañoTotal; // Cuando se calculó finalmente el daño, se lo resta a la vida
             
 
-            // Si fue preciso y además era un ataque Especial, intentará aplicarle el efecto:
-            if (ataqueRecibido.GetEsEspecial() == true)
+            // Si no es inmune al ataque, fue preciso y además era un ataque Especial, intentará aplicarle el efecto:
+            if (ataqueRecibido.GetEsEspecial() && !listaInmunidades.Contains(ataqueRecibido.GetTipo()))
             {
                 string efectoAtaque = ataqueRecibido.GetEfecto();
                 if (EfectoActivo == null)

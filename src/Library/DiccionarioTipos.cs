@@ -17,7 +17,6 @@ public class DiccionarioTipos
         }
         return instancia;
     }
-
     public static List<string> GetDebilContra(string tipo)
     {
         return diccDebilContra[tipo];
