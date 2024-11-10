@@ -19,7 +19,7 @@ public class SuperPociones :IItems
 
     public void ActivarItem(Pokemon pokemon)
     {
-        pokemon.AumentarVida(Vida);
+        pokemon.AlterarVida(Vida);
     }
 
 }

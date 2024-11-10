@@ -4,13 +4,15 @@ namespace Proyecto_Pokemones_I;
 
 public class Entrenador
 {
+    // Atributos:
     private string nombre;
     private Pokemon? pokemonEnUso;
     private List<Pokemon> seleccionPokemones;
     private int pokemonesVivos;
     private List<IItems> listItems;
+    public int TurnosRecargaAtkEspecial { get; set; }
 
-    //Getters:
+    // Getters:
     public string GetNombre()
     {
         return this.nombre;
@@ -35,7 +37,6 @@ public class Entrenador
         }
         return pokemonesVivos;
     }
-
     public string GetListaDeItems()
     {
         Dictionary<string, int> itemCounts = new Dictionary<string, int>();
@@ -60,10 +61,8 @@ public class Entrenador
             resultado += $"{entry.Key} (x{entry.Value}) ";
             Console.Write($"{entry.Key} (x{entry.Value}) / ");
         }
-    
         return resultado.Trim(); // Elimina el último espacio extra al final de la cadena
     }
-
   
     // Constructor:
     public Entrenador(string suNombre)
@@ -72,19 +71,28 @@ public class Entrenador
         this.pokemonEnUso = null;
         this.seleccionPokemones = new List<Pokemon>();
         this.pokemonesVivos = 6;
-        listItems = new List<IItems>();
-        for (int i = 0; i <= 3; i++)
+        this.TurnosRecargaAtkEspecial = 2;      // Decidimos que por defecto no se pueda usar el ataque especial en los primeros dos turnos
+        this.listItems = new List<IItems>();
+        this.RecargarItems();
+    }
+
+    // Métodos:
+    public void RecargarItems()
+    {
+        for (int i = 0; i < 4; i++)    // Agrega 4 Super Poción
         {
             SuperPociones pocion = new SuperPociones();
             listItems.Add(pocion);
         }
-
-        Revivir resusitacion = new Revivir();
+        
+        Revivir resusitacion = new Revivir();   // Agrega 1 Revivir
         listItems.Add(resusitacion);
-        CuraTotal curaTotal = new CuraTotal();
-        listItems.Add(curaTotal);
 
-
+        for (int i = 0; i < 2; i++)
+        {
+            CuraTotal curaTotal = new CuraTotal();  // Agrega 2 Cura Total
+            listItems.Add(curaTotal);
+        }
     }
 
     public void AñadirASeleccion(Pokemon elPokemon)
@@ -150,5 +158,8 @@ public class Entrenador
         return result;
     }
 
-
+    public void AceptarVisitorPorTurno(VisitorPorTurno visitor)
+    {
+        visitor.VisitarEntrenador(this);
+    }
 }
