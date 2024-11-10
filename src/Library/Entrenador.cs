@@ -158,5 +158,8 @@ public class Entrenador
         return result;
     }
 
-
+    public void AceptarVisitorPorTurno(VisitorPorTurno visitor)
+    {
+        visitor.VisitarEntrenador(this);
+    }
 }

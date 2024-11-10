@@ -11,6 +11,7 @@ public class Fachada
     public List<Entrenador> Jugadores { get; private set; }
     public Entrenador entrenadorConTurno;
     public Entrenador entrenadorSinTurno;
+    private VisitorPorTurno visitorTurno;
     public bool existeGanador = false;
 
     // Getters:
@@ -27,6 +28,7 @@ public class Fachada
     private Fachada()
     {
         Jugadores = new List<Entrenador>();
+        visitorTurno = new VisitorPorTurno();
     }
 
     // Métodos: (En orden de aparición en la Batalla)
@@ -136,6 +138,7 @@ public class Fachada
             entrenadorConTurno = Jugadores[0];
             entrenadorSinTurno = Jugadores[1];
         }
+        entrenadorConTurno.AceptarVisitorPorTurno(this.visitorTurno);
     }
     
     public void ChequearQuienEmpieza()
@@ -177,23 +180,6 @@ public class Fachada
         Pokemon pokemonAtacante = entrenadorConTurno.GetPokemonEnUso();
         
         bool ataqueExitoso = true;
-        
-        /*--------------------------------------------------------------------------------------------------------------
-         ESTO NO VA ACÁ, ES DAÑO POR TURNO, DECIDA ATACAR, GUARDAR O USAR ITEM. SE APLICA CADA VEZ QUE ES MI TURNO
-         ---------------------------------------------------------------------------------------------------------------
-         if (pokemonVictima.EfectoActivo == "Envenenado")
-        {
-            pokemonVictima.DañoPorTurno(5);
-            Console.WriteLine($"{pokemonVictima.GetNombre()} sufrirá más daño por estar envenenado, su vida es {entrenadorSinTurno.GetPokemonEnUso().GetVida()}");
-        } //Si el Pokemon que recibe daño está envenenado
-
-        if (pokemonVictima.EfectoActivo == "Quemado")
-        {
-            pokemonVictima.DañoPorTurno(10);
-            Console.WriteLine($"{pokemonVictima.GetNombre()} sufrirá más daño por estar quemado, su vida es {entrenadorConTurno.GetPokemonEnUso().GetVida()}");
-        } //Si el Pokemon que recibe daño está quemado
-        ----------------------------------------------------------------------------------------------------------------
-        */
         
         // Si es el turno del Jugador 1, intentará efectuar el ataque indicado sobre el Pokemon en Uso del Jugador 2
         foreach (IAtaque ataque in pokemonAtacante.GetAtaques())

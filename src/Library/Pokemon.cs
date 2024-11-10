@@ -11,7 +11,8 @@ public class Pokemon
     private double velocidadAtaque;
     private List<IAtaque> listadoAtaques;
     public string EfectoActivo { get; set;}
-    public int TurnosDuracionEfecto { get; private set; }
+    public bool PuedeAtacar { get; set; }
+    public int TurnosDuracionEfecto { get; set; }
     
     //Getters:
     public string GetNombre()
@@ -51,6 +52,7 @@ public class Pokemon
         this.velocidadAtaque = pokeVelAtaque;
         this.listadoAtaques = ataques;
         this.EfectoActivo = null;
+        this.PuedeAtacar = true;
         this.TurnosDuracionEfecto = 0;
     }
     
