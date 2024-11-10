@@ -38,11 +38,6 @@ public class Fachada
         }
         return instancia;
     }
-
-    public bool PuedeAtacar()
-    {
-        return this.entrenadorConTurno.GetPokemonEnUso().PuedeAtacar;
-    }
     
     public void AgregarJugadorALista(string nombreJugador)
     {

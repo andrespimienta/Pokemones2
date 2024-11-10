@@ -88,7 +88,7 @@ public class Program
 
                 if (input == "1") // Compara con "1" en lugar de 1
                 {
-                    if (fachada.PuedeAtacar() &&
+                    if (entrenadorConTurno.GetPokemonEnUso().EfectoActivo != "Paralizado" &&
                         entrenadorConTurno.GetPokemonEnUso().EfectoActivo != "Dormido")
                     {
                         string respuestaUsuario;
