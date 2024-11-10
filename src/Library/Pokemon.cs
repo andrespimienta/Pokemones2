@@ -11,6 +11,7 @@ public class Pokemon
     private double velocidadAtaque;
     private List<IAtaque> listadoAtaques;
     public string EfectoActivo { get; set;}
+    public int turnosDuracionEfecto;
     
     //Getters:
     public string GetNombre()

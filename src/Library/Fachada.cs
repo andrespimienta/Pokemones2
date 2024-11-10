@@ -156,8 +156,6 @@ public class Fachada
                           $"El Pokémon usado es {entrenadorSinTurno.GetPokemonEnUso().GetNombre()}, " +
                           $"vida = {(entrenadorSinTurno.GetPokemonEnUso().GetVida() <= 0 ? "muerto" : entrenadorSinTurno.GetPokemonEnUso().GetVida().ToString())}/{entrenadorSinTurno.GetPokemonEnUso().GetVidaMax()}" +
                           $"{(entrenadorSinTurno.GetPokemonEnUso().GetVida() > 0 ? $", su estado = {(entrenadorSinTurno.GetPokemonEnUso().EfectoActivo ?? "consciente")}" : "")}\n");
-
-
     }
     
     public string ListaAtaques()
