@@ -7,6 +7,10 @@ public class Program
 {
     static void Main()
     {
+        // ANTES DE EMPEZAR RECUERDA IR A LA CLASE LEER ARCHIVO Y
+        // MODIFICAR LA PRIMER STRING POR TU PATH ABSOLUTE
+        // DEL ARCHIVO CATALOGOPOKEMONES.TXT
+        
         DiccionarioTipos.GetInstancia();    // Instancia el Singleton y define el contenido de todos sus diccionarios
         Fachada fachada = Fachada.GetInstancia();
         fachada.ListaDeEspera();
