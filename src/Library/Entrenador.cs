@@ -10,7 +10,7 @@ public class Entrenador
     private List<Pokemon> seleccionPokemones;
     private int pokemonesVivos;
     private List<IItems> listItems;
-    private int turnosRecargaAtkEspecial;
+    public int TurnosRecargaAtkEspecial { get; set; }
 
     // Getters:
     public string GetNombre()
@@ -71,7 +71,7 @@ public class Entrenador
         this.pokemonEnUso = null;
         this.seleccionPokemones = new List<Pokemon>();
         this.pokemonesVivos = 6;
-        this.turnosRecargaAtkEspecial = 2;      // Decidimos que por defecto no se pueda usar el ataque especial en los primeros dos turnos
+        this.TurnosRecargaAtkEspecial = 2;      // Decidimos que por defecto no se pueda usar el ataque especial en los primeros dos turnos
         this.listItems = new List<IItems>();
         this.RecargarItems();
     }

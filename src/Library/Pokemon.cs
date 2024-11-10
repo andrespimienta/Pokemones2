@@ -10,7 +10,7 @@ public class Pokemon
     private double vidaMax;
     private double velocidadAtaque;
     private List<IAtaque> listadoAtaques;
-    public string EfectoActivo { get; private set;}
+    public string EfectoActivo { get; set;}
     public int TurnosDuracionEfecto { get; private set; }
     
     //Getters:
@@ -130,7 +130,7 @@ public class Pokemon
         }
     }
 
-    public void AumentarVida(double hp)
+    public void AlterarVida(double hp)
     {
         this.vida += hp;
     }
