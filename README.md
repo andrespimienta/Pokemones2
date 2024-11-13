@@ -1,5 +1,7 @@
-# Proyecto Pokemones - Parte I
+# Proyecto Pokemones - Parte II
 
+## Link al diagrama UML: 
+https://drive.google.com/file/d/1Bj022eGMNfHM8U-DYtGgH-5fZGOtxviK/view?usp=sharing
 ## Introducción al formato elegido
 La organización detrás de nuestro código para esta parte del proyecto
 gira alrededor de la idea de que los datos necesarios principales se
@@ -52,4 +54,3 @@ con un simple método de Fachada, conectamos de una manera u otra con todas
 las demás clases. Este tipo de funcionamiento aplica para todas las demás
 acciones que se llevarían a cabo en el contexto de una batalla de Pokemones.
 
-Link a diagramas UML: https://drive.google.com/file/d/1Bj022eGMNfHM8U-DYtGgH-5fZGOtxviK/view?usp=sharing
